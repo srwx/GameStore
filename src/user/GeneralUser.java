@@ -1,33 +1,21 @@
 package user;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class GeneralUser {
-    private String userId;
+    private final String userId;
     private String username;
     // private ArrayList<Game> ownedGames;
 
     public GeneralUser(String username) {
         this.username = username;
-        String id = "";
-        for(int i = 0; i < username.length(); i++) {
-            char aplabeth = username.charAt(i);
-            int ascii = aplabeth;
-            id.concat(String.valueOf(ascii));
-        }
-        this.userId = id;
+        this.userId = UUID.randomUUID().toString();
         // this.ownedGames = new ArrayList<Game>();
     }
 
     // public GeneralUser(String username, ArrayList<Game> ownedGames) {
-    //     this.username = username;
-    //     String id = "";
-    //     for(int i = 0; i < username.length(); i++) {
-    //         char aplabeth = username.charAt(i);
-    //         int ascii = aplabeth;
-    //         id.concat(String.valueOf(ascii));
-    //     }
-    //     this.userId = id;
+    //     this.userId = UUID.randomUUID().toString();
     //     this.ownedGames = ownedGames;
     // }
 
