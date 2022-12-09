@@ -1,48 +1,31 @@
 package Game;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
-public class Game {
-    private final String gameId;
-    private String description;
+public class Game extends GameFactory {
     private String category;
-    private double price;
-    private ArrayList<Dlc> extension;
+    private ArrayList<Dlc> extension = new ArrayList<Dlc>();
 
-    public Game(String description, String category, double price) {
-        this.gameId = UUID.randomUUID().toString();
-        this.description = description;
-        this.category = category;
-        this.price = price;
-    }
-
-    public String getGameId() {
-        return this.gameId;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public Game(String name, String description, double price, String category) {
+        super(name, description, price);
+        setCategory(category);
     }
 
     public String getCategory() {
-        return this.category;
+        return category;
     }
 
     public void setCategory(String category) {
         this.category = category;
     }
 
-    public double getPrice() {
-        return this.price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
+    // TODO
+    @Override
+    public void printDetail() {
+        System.out.println("Game name: " + this.getName());
+        System.out.println("Game description: " + this.getDescription());
+        System.out.println("List of DLC: " + this.getExtension());
+        System.out.println("------------------------------------");
     }
 
     public void addExtension(Dlc dlc) {
@@ -51,13 +34,5 @@ public class Game {
 
     public ArrayList<Dlc> getExtension() {
         return this.extension;
-    }
-
-    // TODO
-    public void printDetail() {
-        System.out.println("------- Information of Game: " + this.gameId + " -------");
-        System.out.println("category: " + this.category);
-        System.out.println("price: " + this.price);
-        System.out.println("description: " + this.description);
     }
 }

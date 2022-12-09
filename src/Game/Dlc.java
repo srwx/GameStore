@@ -2,41 +2,24 @@ package Game;
 
 import java.util.UUID;
 
-public class Dlc {
-    private final String dlcId;
-    private String description;
-    private double price;
+public class Dlc extends GameFactory {
+    private String gameId;
 
-    public Dlc(String description, double price) {
-        this.dlcId = UUID.randomUUID().toString();
-        this.description = description;
-        this.price = price;
+    public Dlc(String name, String description, double price, String gameId) {
+        super(name, description, price);
+        setGameId(gameId);
     }
 
-    public String getDlcId() {
-        return  this.dlcId;
+    public String getGameId() {
+        return gameId;
     }
 
-    public String getDescription() {
-        return this.description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public double getPrice() {
-        return this.price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
     }
 
     // TODO
     public void printDetail() {
-        System.out.println("------- Information of DLC: " + this.dlcId + " -------");
-        System.out.println("price: " + this.price);
-        System.out.println("description: " + this.description);
+        System.out.println("detail for dlc");
     }
 }
