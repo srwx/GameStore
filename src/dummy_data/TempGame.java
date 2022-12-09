@@ -1,8 +1,8 @@
-package DummyData;
-
-import Game.*;
+package dummy_data;
 
 import java.util.ArrayList;
+
+import game.*;
 
 // This class used for generate dummy data of game
 public class TempGame {
