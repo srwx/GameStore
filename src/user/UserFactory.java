@@ -14,9 +14,9 @@ public class UserFactory {
         // this.ownedGames = new ArrayList<GameFactory>();
     }
 
-    // public GeneralUser(String username, ArrayList<GameFactory> ownedGames) {
-    //     this.userId = UUID.randomUUID().toString();
-    //     this.ownedGames = ownedGames;
+    // public UserFactory(String username, ArrayList<GameFactory> ownedGames) {
+    // this.userId = UUID.randomUUID().toString();
+    // this.ownedGames = ownedGames;
     // }
 
     public String getUserId() {
