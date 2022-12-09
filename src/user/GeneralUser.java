@@ -6,15 +6,15 @@ import java.util.UUID;
 public class GeneralUser {
     private final String userId;
     private String username;
-    // private ArrayList<Game> ownedGames;
+    // private ArrayList<GameFactory> ownedGames;
 
     public GeneralUser(String username) {
         this.username = username;
         this.userId = UUID.randomUUID().toString();
-        // this.ownedGames = new ArrayList<Game>();
+        // this.ownedGames = new ArrayList<GameFactory>();
     }
 
-    // public GeneralUser(String username, ArrayList<Game> ownedGames) {
+    // public GeneralUser(String username, ArrayList<GameFactory> ownedGames) {
     //     this.userId = UUID.randomUUID().toString();
     //     this.ownedGames = ownedGames;
     // }
