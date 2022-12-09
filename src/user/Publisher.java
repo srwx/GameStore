@@ -1,6 +1,6 @@
 package user;
 
-public class Publisher extends GeneralUser {
+public class Publisher extends UserFactory {
     private String publisherUrl;
 
     public Publisher(String username) {

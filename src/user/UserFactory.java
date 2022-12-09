@@ -3,12 +3,12 @@ package user;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class GeneralUser {
+public class UserFactory {
     private final String userId;
     private String username;
     // private ArrayList<GameFactory> ownedGames;
 
-    public GeneralUser(String username) {
+    public UserFactory(String username) {
         this.username = username;
         this.userId = UUID.randomUUID().toString();
         // this.ownedGames = new ArrayList<GameFactory>();

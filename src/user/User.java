@@ -2,7 +2,7 @@ package user;
 
 import java.util.ArrayList;
 
-public class User extends GeneralUser {
+public class User extends UserFactory {
     // private ArrayList<GameFactory> cart;
 
     public User(String username) {
