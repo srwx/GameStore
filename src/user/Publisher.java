@@ -1,5 +1,8 @@
 package user;
 
+import java.util.ArrayList;
+import game.GameFactory;
+
 public class Publisher extends UserFactory {
     private String publisherUrl;
 
@@ -7,9 +10,9 @@ public class Publisher extends UserFactory {
         super(username);
     }
     
-    // public Publisher(String username, ArrayList<Game> ownedGames) {
-    //     super(username, ownedGames);
-    // }
+    public Publisher(String username, ArrayList<GameFactory> ownedGames) {
+        super(username, ownedGames);
+    }
 
     public void setePublisherUrl(String url) {
         this.publisherUrl = url;
