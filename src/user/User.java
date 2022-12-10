@@ -27,7 +27,6 @@ public class User extends UserFactory {
     }   
 
     public void removeFormCart(GameFactory game) {
-        int index = cart.size();
-        cart.remove(index);
+        cart.remove(game);
     }   
 }
