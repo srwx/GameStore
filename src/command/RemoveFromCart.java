@@ -11,7 +11,8 @@ public class RemoveFromCart extends Command {
 
     public void execute() {
         if (user instanceof User) {
-            user.removeFromCart(game);
+            User requetedUser = (User) user;
+            requetedUser.removeFormCart(game);
         } else {
             System.out.println("You have no permission to perform this action.");
         }

@@ -11,7 +11,8 @@ public class AddToCart extends Command {
 
     public void execute() {
         if (user instanceof User) {
-            user.addToCart(game);
+            User requetedUser = (User) user;
+            requetedUser.addToCart(game);
         } else {
             System.out.println("You have no permission to perform this action.");
         }
