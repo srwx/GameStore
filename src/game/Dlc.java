@@ -5,6 +5,10 @@ import java.util.UUID;
 public class Dlc extends GameFactory {
     private String gameId;
 
+    public Dlc() {
+        super();
+    }
+
     public Dlc(String name, String description, double price, String gameId) {
         super(name, description, price);
         setGameId(gameId);
