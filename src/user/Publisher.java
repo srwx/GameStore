@@ -19,7 +19,7 @@ public class Publisher extends UserFactory {
         super(username, ownedGames);
     }
 
-    public void setePublisherUrl(String url) {
+    public void setPublisherUrl(String url) {
         this.publisherUrl = url;
     }
 
