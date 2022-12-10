@@ -41,7 +41,6 @@ public class Publisher extends UserFactory {
     public boolean editGame(GameFactory game, HashMap<String, String> detail) {
         boolean flag = false;
         if(game instanceof Dlc) {
-            System.out.println("yes, it's DLC");
             for (GameFactory ownedGame : ownedGames) {
                 if (Objects.equals(ownedGame.getId(), ((Dlc) game).getGameId())) {
                     flag = true;

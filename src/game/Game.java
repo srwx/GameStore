@@ -36,7 +36,6 @@ public class Game extends GameFactory {
         System.out.println("Game name: " + this.getName());
         System.out.println("Game description: " + this.getDescription());
         System.out.println("Game price: " + this.getPrice());
-        System.out.println("DLCs: " + String.join(", ", getExtensionNames()));
         System.out.println("DLCs: " + (extension.size() > 0 ? String.join(", ", getExtensionNames()) : "-"));
         System.out.println("------------------------------------");
     }

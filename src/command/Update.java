@@ -28,8 +28,6 @@ public class Update extends Command {
             Publisher requetedPublisher = (Publisher) user;
             boolean isSuccess = requetedPublisher.editGame(game, detail);
 
-            System.out.println("From execute: " + isSuccess);
-
             if(isSuccess) {
                 // set execution detail & datetime after execution complete
                 String executedDetail = "Update " + game.getName() + " information.\n";
