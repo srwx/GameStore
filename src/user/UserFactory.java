@@ -9,6 +9,10 @@ public class UserFactory {
     private String username;
     protected ArrayList<GameFactory> ownedGames;
 
+    public UserFactory() {
+        this.userId = null;
+    }
+
     public UserFactory(String username) {
         this.username = username;
         this.userId = UUID.randomUUID().toString();

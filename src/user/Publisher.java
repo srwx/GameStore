@@ -9,6 +9,8 @@ import game.GameFactory;
 public class Publisher extends UserFactory {
     private String publisherUrl;
 
+    public Publisher() {};
+
     public Publisher(String username) {
         super(username);
     }

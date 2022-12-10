@@ -6,6 +6,8 @@ import game.GameFactory;
 public class User extends UserFactory {
     private ArrayList<GameFactory> cart;
 
+    public User() {};
+
     public User(String username) {
         super(username);
         this.cart = new ArrayList<GameFactory>();
