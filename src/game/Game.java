@@ -6,9 +6,7 @@ public class Game extends GameFactory {
     private String category;
     private ArrayList<Dlc> extension = new ArrayList<Dlc>();
 
-    public Game() {
-        super();
-    };
+    public Game() {};
 
     public Game(String name, String description, double price, String category) {
         super(name, description, price);

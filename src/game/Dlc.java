@@ -6,7 +6,6 @@ public class Dlc extends GameFactory {
     private String gameId;
 
     public Dlc() {
-        super();
     }
 
     public Dlc(String name, String description, double price, String gameId) {
