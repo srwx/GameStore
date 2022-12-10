@@ -1,8 +1,7 @@
 package dummy_data;
 
-import java.util.ArrayList;
-
 import game.*;
+import user.*;
 
 // This class used for generate dummy data of game
 public class TempGame {
@@ -14,18 +13,19 @@ public class TempGame {
     public static Dlc dlc2 = new Dlc("DlcName2", "DlcDescription2", 60, temp2.getId());
     public static Dlc dlc3 = new Dlc("DlcName3", "DlcDescription3", 70, temp3.getId());
 
-    public static ArrayList<Game> gameList = new ArrayList<Game>();
+    public static Publisher publisher1 = new Publisher("Publisher1");
+    public static Publisher publisher2 = new Publisher("Publisher2");
 
-    public static ArrayList<Game> getGameList() {
+
+    public static void init() {
         // Add DLCs to game
         temp1.addExtension(dlc1);
         temp1.addExtension(dlc2);
         temp2.addExtension(dlc3);
 
-        gameList.add(temp1);
-        gameList.add(temp2);
-        gameList.add(temp3);
-
-        return gameList;
+        // Add games to publisher
+        publisher1.addGame(temp1);
+        publisher1.addGame(temp2);
+        publisher2.addGame(temp3);
     }
 }
