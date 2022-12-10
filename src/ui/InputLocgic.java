@@ -29,4 +29,13 @@ public class InputLocgic {
     public static void inputError() {
         System.out.println("Invalid input, please try again");
     }
+
+    public static boolean integerPrasingGard(String input) {
+        try {
+            Integer.parseInt(input);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

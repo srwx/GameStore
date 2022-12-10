@@ -5,8 +5,9 @@ import java.util.HashMap;
 import game.Dlc;
 import game.Game;
 import game.GameFactory;
+import user.User;
 
-public class General {
+public class Ui {
 
     public static int cover() {
         String input = "";
@@ -61,6 +62,13 @@ public class General {
 
         InputLocgic.clearScreen();
         System.out.println("Log in to ypur account\n");
+
+        ////////////////////////////////////// Demo ////////////////////////////////////////
+        System.out.println("For demo application");
+        System.out.println("please enter username as\'publisher\' to login as publisher");
+        System.out.println("otherwise will be an user role");
+        ////////////////////////////////////////////////////////////////////////////////////
+
         System.out.print("Enter your username: ");
         input = InputLocgic.getInput(false);
         return input;
@@ -97,10 +105,12 @@ public class General {
             }
             System.out.print("Select game: ");
             input = InputLocgic.getInput(true);
-            int menuSelected = Integer.parseInt(input);
-            if(!(menuSelected >= gameNumber || menuSelected < 1)) check = true;
+            if(InputLocgic.integerPrasingGard(input)) {
+                int menuSelected = Integer.parseInt(input);
+                if(!(menuSelected > gameNumber || menuSelected < 1)) check = true;
+            }  
         }
-        return games.get(Integer.parseInt(input));
+        return games.get(Integer.parseInt(input)-1);
     }
 
     public static Game gameDetailPage(Game game) {
@@ -137,9 +147,33 @@ public class General {
         return input.equals("y") ? dlc : new Dlc();
     }
 
-    public static void showUserGame(ArrayList<GameFactory> games) {
-        for (GameFactory item : games) {
-            item.printDetail();
+    public static void cartPage(User user) {
+        ArrayList<GameFactory> game = user.getCart();
+        InputLocgic.clearScreen();
+        System.out.println("Show user's cart");
+        if(game.size() == 0) {
+            System.out.println("No game in cart");
+        }
+        else {
+            InputLocgic.clearScreen();
+            for (int i = 0; i < game.size(); i++) {
+                System.out.println((i+1) + ".) " + game.get(i).getName());
+            }
+        }
+    }
+
+    public static void ownedGamePage(User user) {
+        ArrayList<GameFactory> game = user.getOwnedGames();
+        InputLocgic.clearScreen();
+        System.out.println("Show user's game");
+        if(game.size() == 0) {
+            System.out.println("No game in cart");
+        }
+        else {
+            InputLocgic.clearScreen();
+            for (int i = 0; i < game.size(); i++) {
+                System.out.println((i+1) + ".) " + game.get(i).getName());
+            }
         }
     }
 }
