@@ -1,6 +1,7 @@
 package command;
 
 import game.GameFactory;
+import user.Publisher;
 import user.UserFactory;
 
 public class Delete extends Command {
@@ -9,6 +10,12 @@ public class Delete extends Command {
     }
 
     public void execute() {
-
+        if (user instanceof Publisher) {
+            // set execution detail & datetime after execution complete
+            String executedDetail = "Remove " + game.getName() + "from store.\n";
+            setExecutedDateTime(executedDetail);
+        } else {
+            System.out.println("You have no permission to perform this action.");
+        }
     }
 }
