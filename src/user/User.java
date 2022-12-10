@@ -26,7 +26,7 @@ public class User extends UserFactory {
         cart.add(game);
     }   
 
-    public void removeFormCart(GameFactory game) {
+    public void removeFromCart(GameFactory game) {
         cart.remove(game);
     }   
 }

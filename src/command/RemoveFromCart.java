@@ -12,7 +12,7 @@ public class RemoveFromCart extends Command {
     public void execute() {
         if (user instanceof User) {
             User requetedUser = (User) user;
-            requetedUser.removeFormCart(game);
+            requetedUser.removeFromCart(game);
             // set execution detail & datetime after execution complete
             String executedDetail = "Remove " + game.getName() + " from cart.\n";
             setExecutedDateTime(executedDetail);
