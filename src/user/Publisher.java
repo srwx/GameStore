@@ -3,6 +3,7 @@ package user;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import game.Dlc;
 import game.Game;
 import game.GameFactory;
 
@@ -43,5 +44,14 @@ public class Publisher extends UserFactory {
             if(detail.containsKey("description")) game.setDescription(detail.get("description"));
             return true;
         } else return false;
+    }
+
+    public boolean addDlc(Game game, Dlc dlc) {
+        if(ownedGames.contains(game)) {
+            game.addExtension(dlc);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

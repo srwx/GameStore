@@ -1,5 +1,6 @@
 package game;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Game extends GameFactory {
@@ -21,12 +22,20 @@ public class Game extends GameFactory {
         this.category = category;
     }
 
+    private ArrayList<String> getExtensionNames() {
+        ArrayList<String> names = new ArrayList<String>();
+        for (int i = 0; i < extension.size(); i++) {
+            names.add(extension.get(i).getName());
+        }
+        return names;
+    }
+
     // TODO
     @Override
     public void printDetail() {
         System.out.println("Game name: " + this.getName());
         System.out.println("Game description: " + this.getDescription());
-        System.out.println("DLCs: " + this.getExtension().size() + " dlc");
+        System.out.println("DLCs: " + String.join(", ", getExtensionNames()));
         System.out.println("------------------------------------");
     }
 

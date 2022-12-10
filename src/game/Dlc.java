@@ -1,7 +1,5 @@
 package game;
 
-import java.util.UUID;
-
 public class Dlc extends GameFactory {
     private String gameId;
 
@@ -24,5 +22,9 @@ public class Dlc extends GameFactory {
     // TODO
     public void printDetail() {
         System.out.println("detail for dlc");
+        System.out.println("DLC name: " + this.getName());
+        System.out.println("DLC description: " + this.getDescription());
+        System.out.println("DLC price: " + this.getPrice());
+        System.out.println("------------------------------------");
     }
 }
