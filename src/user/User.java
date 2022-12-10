@@ -29,4 +29,8 @@ public class User extends UserFactory {
     public void removeFromCart(GameFactory game) {
         cart.remove(game);
     }   
+
+    public void removeFromCart(int index) {
+        cart.remove(index);
+    } 
 }
