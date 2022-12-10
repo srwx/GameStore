@@ -8,7 +8,7 @@ import game.GameFactory;
 
 public class General {
 
-    public static void cover() {
+    public static int cover() {
         String input = "";
         ArrayList<String> menu = new ArrayList<String>() {
             {
@@ -30,6 +30,7 @@ public class General {
             input = InputLocgic.getInput(true);
             if(menu.contains(input)) check = true;
         }
+        return Integer.parseInt(input);
     }
 
     public static boolean getUserRole() {
@@ -55,16 +56,25 @@ public class General {
         return input.equals(menu.get(0)) ? true : false;
     }
 
-    public static HashMap<String, String> authorizationPage(boolean toLoginPage) {
+    public static String loginPage() {
+        String input = "";
+
+        InputLocgic.clearScreen();
+        System.out.println("Log in to ypur account\n");
+        System.out.print("Enter your username: ");
+        input = InputLocgic.getInput(false);
+        return input;
+    }
+
+    public static HashMap<String, String> createUserPage() {
         String input = "";
         boolean isUser = true;
 
         InputLocgic.clearScreen();
-        if(toLoginPage) System.out.println("Log in to ypur account\n");
-        else System.out.println("Create an account to Get a new Game!\n");
+        System.out.println("Create an account to Get a new Game!\n");
         System.out.print("Enter your username: ");
         input = InputLocgic.getInput(false);
-        if(!toLoginPage) isUser = getUserRole();
+        isUser = getUserRole();
 
         HashMap<String, String> user = new HashMap<String, String>();
         user.put("username", input);
@@ -125,5 +135,11 @@ public class General {
             if(input.equals("y") || input.equals("n")) check = true;
         }
         return input.equals("y") ? dlc : new Dlc();
+    }
+
+    public static void showUserGame(ArrayList<GameFactory> games) {
+        for (GameFactory item : games) {
+            item.printDetail();
+        }
     }
 }

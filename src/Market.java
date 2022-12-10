@@ -27,8 +27,9 @@ public class Market {
         else return new User(username);
     }
 
-    public void login(String username) {
-        this.user = new UserFactory(username);
+    public void login(String username, boolean isPublisher) {
+        if(isPublisher) this.user = new Publisher(username);
+        else this.user = new User(username);
     }
 
     public UserFactory getLoggedInUser() {
