@@ -2,6 +2,7 @@ package command;
 
 import game.GameFactory;
 import user.Publisher;
+import user.User;
 import user.UserFactory;
 
 public class Delete extends Command {
@@ -11,6 +12,9 @@ public class Delete extends Command {
 
     public void execute() {
         if (user instanceof Publisher) {
+            Publisher requetedPublisher = (Publisher) user;
+            requetedPublisher.removeGame(game);
+
             // set execution detail & datetime after execution complete
             String executedDetail = "Remove " + game.getName() + "from store.\n";
             setExecutedDateTime(executedDetail);
