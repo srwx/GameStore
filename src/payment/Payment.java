@@ -1,7 +1,5 @@
 package payment;
 
-public abstract class Payment {
-    public Payment() {
-
-    }
+public interface Payment {
+    boolean validatePayment(double payAmount);
 }
