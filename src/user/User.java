@@ -8,10 +8,12 @@ public class User extends UserFactory {
 
     public User(String username) {
         super(username);
+        this.cart = new ArrayList<GameFactory>();
     }
     
     public User(String username, ArrayList<GameFactory> ownedGames) {
         super(username, ownedGames);
+        this.cart = new ArrayList<GameFactory>();
     }
 
     public ArrayList<GameFactory> getCart() {
