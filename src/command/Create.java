@@ -15,7 +15,7 @@ public class Create extends Command {
             user.addGame(game);
 
             // set execution detail & datetime after execution complete
-            String executedDetail = "Create " + game.getName() + "to store.\n";
+            String executedDetail = "Create " + game.getName() + " to store.\n";
             setExecutedDateTime(executedDetail);
         } else {
             System.out.println("You have no permission to perform this action.");

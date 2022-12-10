@@ -16,7 +16,7 @@ public class Delete extends Command {
             requetedPublisher.removeGame(game);
 
             // set execution detail & datetime after execution complete
-            String executedDetail = "Remove " + game.getName() + "from store.\n";
+            String executedDetail = "Remove " + game.getName() + " from store.\n";
             setExecutedDateTime(executedDetail);
         } else {
             System.out.println("You have no permission to perform this action.");

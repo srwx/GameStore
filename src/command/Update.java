@@ -9,8 +9,9 @@ import java.util.HashMap;
 public class Update extends Command {
     private HashMap<String, String> detail; // key: "name" | "price" | "description"
 
-    public Update(GameFactory game, UserFactory user) {
+    public Update(GameFactory game, UserFactory user, HashMap<String, String> detail) {
         super(game, user);
+        setDetail(detail);
     }
 
     public HashMap<String, String> getDetail() {
@@ -28,7 +29,7 @@ public class Update extends Command {
 
             if(isSuccess) {
                 // set execution detail & datetime after execution complete
-                String executedDetail = "Update " + game.getName() + "information.\n";
+                String executedDetail = "Update " + game.getName() + " information.\n";
                 setExecutedDateTime(executedDetail);
             } else {
                 System.out.println("Update game failed.");
