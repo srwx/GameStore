@@ -1,6 +1,7 @@
 package command;
 
 import game.GameFactory;
+import user.User;
 import user.UserFactory;
 import payment.Payment;
 
@@ -13,16 +14,20 @@ public class Buy extends Command {
     }
 
     public void execute() {
-        boolean paymentValidated = payment.validatePayment(game.getPrice());
-        if (paymentValidated) {
-            user.addGame(game);
-            System.out.println(game.getName() + " added to your library");
+        if (user instanceof User) {
+            boolean paymentValidated = payment.validatePayment(game.getPrice());
+            if (paymentValidated) {
+                user.addGame(game);
+                System.out.println(game.getName() + " added to your library");
 
-            // set execution detail & datetime after execution complete
-            String executedDetail = "Successfully Buy " + game.getName() + "\n";
-            setExecutedDateTime(executedDetail);
+                // set execution detail & datetime after execution complete
+                String executedDetail = "Successfully Buy " + game.getName() + "\n";
+                setExecutedDateTime(executedDetail);
+            } else {
+                System.out.println("Failed to buy " + game.getName());
+            }
         } else {
-            System.out.println("Failed to buy " + game.getName());
+            System.out.println("You have no permission to perform this action.");
         }
     }
 }
