@@ -6,6 +6,8 @@ public class Game extends GameFactory {
     private String category;
     private ArrayList<Dlc> extension = new ArrayList<Dlc>();
 
+    public Game() {};
+
     public Game(String name, String description, double price, String category) {
         super(name, description, price);
         setCategory(category);
@@ -24,7 +26,7 @@ public class Game extends GameFactory {
     public void printDetail() {
         System.out.println("Game name: " + this.getName());
         System.out.println("Game description: " + this.getDescription());
-        System.out.println("List of DLC: " + this.getExtension());
+        System.out.println("DLCs: " + this.getExtension().size() + "dlc");
         System.out.println("------------------------------------");
     }
 

@@ -8,6 +8,10 @@ public abstract class GameFactory {
     private String description;
     private double price;
 
+    public GameFactory() {
+        id = null;
+    };
+
     public GameFactory(String name, String description, double price) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
