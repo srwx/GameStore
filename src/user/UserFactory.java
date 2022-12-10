@@ -7,7 +7,7 @@ import game.GameFactory;
 public class UserFactory {
     private final String userId;
     private String username;
-    private ArrayList<GameFactory> ownedGames;
+    protected ArrayList<GameFactory> ownedGames;
 
     public UserFactory(String username) {
         this.username = username;

@@ -21,4 +21,12 @@ public class Publisher extends UserFactory {
     public String getPubliserUrl() {
         return this.publisherUrl;
     }
+
+    public void removeGame(int index) {
+        ownedGames.remove(index);
+    }
+
+    public void removeGame(GameFactory game) {
+        ownedGames.remove(game);
+    }
 }
