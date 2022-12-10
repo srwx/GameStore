@@ -1,5 +1,6 @@
 package command;
 
+import game.Game;
 import game.GameFactory;
 import user.Publisher;
 import user.UserFactory;
@@ -27,12 +28,14 @@ public class Update extends Command {
             Publisher requetedPublisher = (Publisher) user;
             boolean isSuccess = requetedPublisher.editGame(game, detail);
 
+            System.out.println("From execute: " + isSuccess);
+
             if(isSuccess) {
                 // set execution detail & datetime after execution complete
                 String executedDetail = "Update " + game.getName() + " information.\n";
                 setExecutedDateTime(executedDetail);
             } else {
-                System.out.println("Update game failed.");
+                System.out.println("Update " + (game instanceof Game ? "game " : "dlc ") + "failed.");
             }
         } else {
             System.out.println("You have no permission to perform this action.");

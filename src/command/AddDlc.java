@@ -31,7 +31,7 @@ public class AddDlc extends Command {
                 String executedDetail = "Add DLC " + dlc.getName() + " to game " + updateGame.getName() + ".\n";
                 setExecutedDateTime(executedDetail);
             } else {
-                System.out.println("Update game failed.");
+                System.out.println("Update dlc failed.");
             }
         } else {
             System.out.println("You have no permission to perform this action.");
