@@ -34,7 +34,6 @@ public class Buy extends Command {
                         gameValidated = true;
                     } 
                 } else {
-                    success = true;
                     System.out.println("Failed to buy " + game.getName() + ", you don't have the main game of this DLC");
                 }
             } else if(game instanceof Game) {
