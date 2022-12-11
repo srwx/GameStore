@@ -38,4 +38,13 @@ public class InputLogic {
             return false;
         }
     }
+
+    public static boolean doublePrasingGard(String input) {
+        try {
+            Double.parseDouble(input);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

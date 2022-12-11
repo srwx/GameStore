@@ -59,8 +59,10 @@ public class PublisherUi {
             }
             while(price == -1) {
                 System.out.print(type + " price: ");
-                input = InputLogic.getInput(true);
-                price = Double.parseDouble(input);
+                input = InputLogic.getInput(false);
+                if(!input.isEmpty()) {
+                    if(InputLogic.doublePrasingGard(input)) price = Double.parseDouble(input);
+                }
             }
             boolean check = false;
             while(!check) {
@@ -123,8 +125,10 @@ public class PublisherUi {
             System.out.print(type + " description: ");
             description =  InputLogic.getInput(false);
             System.out.print(type + " price: ");
-            input =  InputLogic.getInput(true);
-            if(!input.isEmpty()) price = Double.parseDouble(input);
+            input =  InputLogic.getInput(false);
+            if(!input.isEmpty()) {
+                if(InputLogic.doublePrasingGard(input)) price = Double.parseDouble(input);
+            } 
 
             while(!check) {
                 InputLogic.clearScreen();

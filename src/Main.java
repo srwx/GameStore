@@ -234,7 +234,7 @@ public class Main {
             if(menuSelected == 0) break; // Exit to authentication page
             if(menuSelected > 2) {
                 // UI edit/delete/add dlc... for a game
-                gameOptionDemo(user, user.getOwnedGames().get(menuSelected-2), executor);
+                gameOptionDemo(user, user.getOwnedGames().get(menuSelected-3), executor);
             } 
             if(menuSelected == 1) {
                 // Go to form create game
