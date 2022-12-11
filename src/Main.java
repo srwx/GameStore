@@ -179,8 +179,9 @@ public class Main {
         String userSelect = "";
         InputLogic.clearScreen();
         System.out.println("\n============ Welcome, " + user.getUsername() + " ============");
+        boolean isLogin = true;
 
-        while (true) {
+        while (isLogin) {
             // Menu to show
             System.out.println("\nWhat you need to do?");
             System.out.println("\t1.) View owned game & cart");
@@ -210,6 +211,8 @@ public class Main {
                     break;
                 case ("5"):
                     // TODO: log out
+                    market.logout();
+                    isLogin = false;
                     break;
                 default:
                     System.out.println("Error, Please enter menu's number (1, 2, 3, 4, 5)");
@@ -275,8 +278,8 @@ public class Main {
 
     public static void main(String[] args) {
         Market market = new Market(init());
-        authentication(market);
         while(true) {
+            authentication(market);
             if(market.getLoggedInUser() instanceof User) {
                 userDemo(market);
             } else {
