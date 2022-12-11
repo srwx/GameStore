@@ -11,7 +11,7 @@ import game.Dlc;
 import game.Game;
 import game.GameFactory;
 import payment.UserWallet;
-import ui.Ui;
+import example.ui.Ui;
 import user.Publisher;
 import user.User;
 import user.UserFactory;
