@@ -26,10 +26,10 @@ public class Ui {
             InputLogic.clearScreen();
             System.out.println("Welcome to Game Store\n");
             System.out.println("Please select an action:");
-            System.out.println("1.) Create an account");
-            System.out.println("2.) Log in to your account");
-            System.out.println("3.) Exit");
-            System.out.print("Your action: ");
+            System.out.println("\t1.) Create an account");
+            System.out.println("\t2.) Log in to your account");
+            System.out.println("\t3.) Exit");
+            System.out.print("\n> Your action: ");
             input = InputLogic.getInput(true);
             if(menu.contains(input)) check = true;
         }
@@ -49,9 +49,9 @@ public class Ui {
         while(!check) {
             InputLogic.clearScreen();
             System.out.println("Select your role by number");
-            System.out.println("1.) User");
-            System.out.println("2.) Publisher");
-            System.out.print("Your are: ");
+            System.out.println("\t1.) User");
+            System.out.println("\t2.) Publisher");
+            System.out.print("\n> Your are: ");
             input = InputLogic.getInput(true);
             if(menu.contains(input)) check = true;
         }
@@ -81,8 +81,7 @@ public class Ui {
         boolean isUser = true;
 
         InputLogic.clearScreen();
-        System.out.println("Create an account to Get a new Game!\n");
-        System.out.print("Enter your username: ");
+        System.out.print("> Enter your username: ");
         input = InputLogic.getInput(false);
         isUser = getUserRole();
 
@@ -106,10 +105,11 @@ public class Ui {
                 System.out.println(i+1);
                 games.get(i).printDetail();
             }
-            System.out.print("Select game (0 to exit program): ");
+            System.out.print("> Enter game's number to view game information (or enter 0 to back to menu): ");
             input = InputLogic.getInput(true);
             menuSelected = Integer.parseInt(input);
             if(!(menuSelected > gameNumber || menuSelected < 0)) check = true;
+            System.out.println();
         }
         return (menuSelected != 0) ? games.get(Integer.parseInt(input)-1) : new Game();
     }
@@ -124,13 +124,13 @@ public class Ui {
             ArrayList<Dlc> dlc = game.getExtension();
             game.printDetail();
             if(!dlc.isEmpty()) {
-                System.out.println("\t\t\t\tDLC List");
+                System.out.println("=================== DLC List ===================\n");
                 for (i = 0; i < dlc.size(); i++) {
                     System.out.println("dlc" + (i+1));
                     dlc.get(i).printDetail();
                 }
             }
-            System.out.print("Add " + game.getName() + " to cart(y/n): ");
+            System.out.print("> Add " + game.getName() + " to cart(y/n): ");
             input = InputLogic.getInput(false).toLowerCase();
             if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n")) check = true;
         }
@@ -144,7 +144,7 @@ public class Ui {
         while(!check) {
             InputLogic.clearScreen();
             dlc.printDetail();
-            System.out.print("Add " + dlc.getName() + " to cart(y/n): ");
+            System.out.print("> Add " + dlc.getName() + " to cart(y/n): ");
             input = InputLogic.getInput(false).toLowerCase();
             if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n")) check = true;
         }

@@ -85,14 +85,14 @@ public class Main {
             }
             input = "";
             while(!checkInput) {
-                System.out.print("Do you want to see any dlcs? (select by command dlc[number] or n if you don't): ");
+                System.out.print("> Do you want to add any dlc to cart? (select by command dlc[number] or n if you don't): ");
                 input = InputLogic.getInput(false).toLowerCase();
                 if(input.equalsIgnoreCase("n") || dlcOption.contains(input)) checkInput = true;
             }
             if(!input.equalsIgnoreCase("n")) {
                 String index = Character.toString(input.charAt(3));
                 int dlcIndex = Integer.parseInt(index)-1;
-                Dlc selectedDlc = Ui.dlcDetailPage(dlc.get(dlcIndex));
+                Dlc selectedDlc = dlc.get(dlcIndex);
                 if(selectedDlc.getId() != null && !cart.contains(selectedDlc)) executor.executeCommand(new AddToCart(selectedDlc, user));
             }  
         }
@@ -113,18 +113,18 @@ public class Main {
             GameFactory game;
             GameFactory selectedGame;
             selectedGame = Ui.home(market.getGames()); // return the selected game
-            if(selectedGame.getId() == null) System.exit(0); // Exit the program
+            if(selectedGame.getId() == null) break; // Back to menu
             game = Ui.gameDetailPage((Game)selectedGame); // return object game to add to cart
             if(game.getId() != null && !cart.contains(game)) {
                 executor.executeCommand(new AddToCart(game, user));
             } 
             dlc = ((Game)selectedGame).getExtension();
-            // Ask user to see any dlc of the selected game
+            // Ask user to add any dlc of the selected game to cart
             selectDlcDemo(market, dlc);
             
             checkInput = false;
             while(!checkInput) {
-                System.out.print("Add more game?(y/n): ");
+                System.out.print("> Add more game?(y/n): ");
                 input = InputLogic.getInput(false).toLowerCase();
                 if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n")) checkInput = true;
             }
@@ -143,11 +143,10 @@ public class Main {
         while(isBuying){
             boolean check = false;
             int menuSelected = -1;
-            check = false;
             while(!check) {
                 InputLogic.clearScreen();
                 Ui.cartPage(user);
-                System.out.print("Select game to buy (or n to exit): ");
+                System.out.print("> Select game to buy (or n to back to menu): ");
                 input = InputLogic.getInput(false);
                 if(input.equalsIgnoreCase("n")) {
                     check = true;
@@ -164,33 +163,58 @@ public class Main {
                 check = false;
                 if(!cart.isEmpty()) {
                     while(!check) {
-                        System.out.print("\nBuy more in your cart?(y/n): ");
+                        System.out.print("\n> Buy more in your cart?(y/n): ");
                         input = InputLogic.getInput(false).toLowerCase();
                         if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n")) check = true;
                     }
                     if(input.equalsIgnoreCase("n")) isBuying = false;
                 } else isBuying = false;
-            } 
+            }
         }
     }
 
     // Demo for user: show cart/ownedGame -> select game to cart/show cart -> buy -> show ownedGame
     static void userDemo(Market market) {
         User user = (User)market.getLoggedInUser();
-
-        // Show cart/ownedGame
+        String userSelect = "";
         InputLogic.clearScreen();
         System.out.println("\n============ Welcome, " + user.getUsername() + " ============");
-        Ui.ownedGamePage(user);
-        Ui.cartPage(user);
-        System.out.println("\nPress enter to continue...");
-        InputLogic.getInput(false);
 
-        selectGameDemo(market);
-        buyDemo(market);
-        
-        // show ownedGame
-        Ui.ownedGamePage(user);
+        while (true) {
+            // Menu to show
+            System.out.println("\nWhat you need to do?");
+            System.out.println("\t1.) View owned game & cart");
+            System.out.println("\t2.) View game market");
+            System.out.println("\t3.) Buy game(s) in cart");
+            System.out.println("\t4.) View command history");
+            System.out.println("\t5.) Log out");
+            System.out.print("\n> Select (1-5): ");
+            userSelect = InputLogic.getInput(true);
+            System.out.println();
+            switch (userSelect) {
+                case ("1"):
+                    Ui.ownedGamePage(user);
+                    Ui.cartPage(user);
+                    System.out.println("\n*****************************************");
+                    break;
+                case ("2"):
+                    selectGameDemo(market);
+                    System.out.println("\n*****************************************");
+                    break;
+                case ("3"):
+                    buyDemo(market);
+                    System.out.println("\n*****************************************");
+                    break;
+                case ("4"):
+                    market.getExecutor().printHistoryCommand();
+                    break;
+                case ("5"):
+                    // TODO: log out
+                    break;
+                default:
+                    System.out.println("Error, Please enter menu's number (1, 2, 3, 4, 5)");
+            }
+        }
     }
 
     //////////////////////////////// Publisher /////////////////////////////////////////////////
@@ -251,8 +275,8 @@ public class Main {
 
     public static void main(String[] args) {
         Market market = new Market(init());
+        authentication(market);
         while(true) {
-            authentication(market);
             if(market.getLoggedInUser() instanceof User) {
                 userDemo(market);
             } else {

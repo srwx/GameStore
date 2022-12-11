@@ -41,7 +41,7 @@ public class Game extends GameFactory {
         System.out.printf(format, "Game description: ", this.getDescription());
         System.out.printf(format, "Game price: ", (this.getPrice() + "฿"));
         System.out.printf(format, "DLCs: ", (extension.size() > 0 ? String.join(", ", getExtensionNames()) : "-"), "\n");
-        System.out.println("----------------------------------------------");
+        System.out.println();
     }
 
     public void addExtension(Dlc dlc) {
