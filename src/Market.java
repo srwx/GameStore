@@ -42,4 +42,16 @@ public class Market {
     public CommandExecutor getExecutor() {
         return this.executor;
     }
+
+    public void addPublisher(Publisher publisher) {
+        this.publishers.add(publisher);
+    }
+
+    public void removePublisher(Publisher publisher) {
+        if(this.publishers.contains(publisher)) this.publishers.remove(publisher);
+    }
+
+    public void removePublisher(int index) {
+        if(index < this.publishers.size()) this.publishers.remove(index);
+    }
 }
