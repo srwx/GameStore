@@ -1,6 +1,5 @@
 package game;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Game extends GameFactory {
@@ -8,6 +7,10 @@ public class Game extends GameFactory {
     private ArrayList<Dlc> extension = new ArrayList<Dlc>();
 
     public Game() {};
+
+    public Game(String id) {
+        super(id);
+    }
 
     public Game(String name, String description, double price, String category) {
         super(name, description, price);

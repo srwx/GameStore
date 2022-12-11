@@ -2,7 +2,6 @@ package command;
 
 import game.GameFactory;
 import user.Publisher;
-import user.User;
 import user.UserFactory;
 
 public class Delete extends Command {

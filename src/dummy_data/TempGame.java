@@ -10,7 +10,7 @@ public class TempGame {
     public static Game temp3 = new Game("GameName3", "GameDescription3", 300, "GameCat3");
 
     public static Dlc dlc1 = new Dlc("DlcName1", "DlcDescription1", 50, temp1.getId());
-    public static Dlc dlc2 = new Dlc("DlcName2", "DlcDescription2", 60, temp2.getId());
+    public static Dlc dlc2 = new Dlc("DlcName2", "DlcDescription2", 60, temp1.getId());
     public static Dlc dlc3 = new Dlc("DlcName3", "DlcDescription3", 70, temp3.getId());
 
     public static Publisher publisher1 = new Publisher("Publisher1");

@@ -6,8 +6,6 @@ import game.GameFactory;
 import user.Publisher;
 import user.UserFactory;
 
-import java.util.HashMap;
-
 public class AddDlc extends Command {
     private Dlc dlc;
 

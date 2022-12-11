@@ -2,7 +2,6 @@ package user;
 
 import java.util.ArrayList;
 import java.util.UUID;
-import game.GameFactory;
 import game.Game;
 
 public class UserFactory {
