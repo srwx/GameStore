@@ -2,6 +2,8 @@ package user;
 
 import java.util.ArrayList;
 import java.util.UUID;
+
+import game.Dlc;
 import game.Game;
 
 public class UserFactory {
@@ -39,6 +41,39 @@ public class UserFactory {
 
     public void addGame(Game game) {
         this.ownedGames.add(game);
+    }
+
+    public Game getGame(String id) {
+        for (Game game : ownedGames) {
+            if (game.getId().equals(id))
+                return game;
+        }
+        return null;
+    }
+
+    public boolean hasGame(String id) {
+        for (Game game : ownedGames) {
+            if (game.getId().equals(id))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean hasDlc(Dlc dlc) {
+        for (Game game : ownedGames) {
+            if (game.getExtension().contains(dlc))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean addDlc(Game game, Dlc dlc) {
+        if(ownedGames.contains(game)) {
+            game.addExtension(dlc);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void printDetail() {

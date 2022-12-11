@@ -60,13 +60,4 @@ public class Publisher extends UserFactory {
         }
         return false;
     }
-
-    public boolean addDlc(Game game, Dlc dlc) {
-        if(ownedGames.contains(game)) {
-            game.addExtension(dlc);
-            return true;
-        } else {
-            return false;
-        }
-    }
 }
