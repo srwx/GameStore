@@ -59,21 +59,26 @@ public class Ui {
         return input.equalsIgnoreCase(menu.get(0)) ? true : false;
     }
 
-    public static String loginPage() {
+    public static HashMap<String, String> loginPage() {
         String input = "";
+        boolean isUser;
 
-        InputLogic.clearScreen();
-        System.out.println("Log in to ypur account\n");
+        isUser = getUserRole();
+        System.out.println("Log in to your account\n");
 
         ////////////////////////////////////// Demo ////////////////////////////////////////
-        System.out.println("For demo application");
-        System.out.println("please enter username as\'publisher\' to login as publisher");
-        System.out.println("otherwise will be an user role");
+        // System.out.println("For demo application");
+        // System.out.println("please enter username as\'publisher\' to login as publisher");
+        // System.out.println("otherwise will be an user role");
         ////////////////////////////////////////////////////////////////////////////////////
 
+        InputLogic.clearScreen();
         System.out.print("Enter your username: ");
         input = InputLogic.getInput(false);
-        return input;
+        HashMap<String, String> user = new HashMap<String, String>();
+        user.put("username", input);
+        user.put("role", isUser == true ? "user" : "publisher");
+        return user;
     }
 
     public static HashMap<String, String> createUserPage() {

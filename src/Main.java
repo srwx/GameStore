@@ -9,7 +9,7 @@ import command.CommandExecutor;
 import command.Create;
 import command.Delete;
 import command.Update;
-import example.dummy_data.TempGame;
+import example.dummy_data.GameStoreDatabase;
 import example.ui.InputLogic;
 import game.Dlc;
 import game.Game;
@@ -24,10 +24,10 @@ import user.UserFactory;
 public class Main {
     
     static ArrayList<Publisher> init() {
-        TempGame.init();
+        GameStoreDatabase.init();
         ArrayList<Publisher> publishersList = new ArrayList<Publisher>();
-        publishersList.add(TempGame.publisher1);
-        publishersList.add(TempGame.publisher2);
+        publishersList.add(GameStoreDatabase.publisher1);
+        publishersList.add(GameStoreDatabase.publisher2);
         return publishersList;
     }
 
@@ -44,19 +44,22 @@ public class Main {
             UserFactory dummyUser = new UserFactory();
             dummyUser = market.createUser(username, role == "user" ? false : true);
             market.login(dummyUser.getUsername(), dummyUser instanceof Publisher);
-            if(dummyUser instanceof Publisher) market.addPublisher((Publisher)market.getLoggedInUser());
         } 
         else if(menuSelected == 2) {
             // Login
-            String username = Ui.loginPage();
+            HashMap<String, String> detail = Ui.loginPage();
+            String username = detail.get("username");
+            String role = detail.get("role");
             // In this demo will query user form logged in user of market if system has this user,
             // otherwise will create an new instance
-            if(user == null || !user.getUsername().equalsIgnoreCase(username)) {
-                if(username.equals("publisher")) {
-                    market.login(username, true);
-                    market.addPublisher((Publisher)market.getLoggedInUser());
-                } 
-                else market.login(username, false);
+            if(user == null || !user.getUsername().equals(username)) {
+                market.login(username, role.equals("publisher"));
+                if (market.getLoggedInUser() == null) {
+                    System.out.println("user \"" + username + "\" not found.");
+                    System.out.println("Press enter to continue...");
+                    InputLogic.getInput(false);
+                    InputLogic.clearScreen();
+                }
             }
         } else if(menuSelected == 3) {
             // Exit program
@@ -279,7 +282,10 @@ public class Main {
     public static void main(String[] args) {
         Market market = new Market(init());
         while(true) {
-            authentication(market);
+            do {
+                authentication(market);
+            } while (market.getLoggedInUser() == null);
+            
             if(market.getLoggedInUser() instanceof User) {
                 userDemo(market);
             } else {
