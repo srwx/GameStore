@@ -95,6 +95,7 @@ public class Ui {
         String input = "";
         boolean check = false;
         int gameNumber = games.size();
+        int menuSelected = -1;
 
         while(!check) {
             InputLocgic.clearScreen();
@@ -104,14 +105,14 @@ public class Ui {
                 System.out.println(i+1);
                 games.get(i).printDetail();
             }
-            System.out.print("Select game: ");
+            System.out.print("Select game (0 to exit program): ");
             input = InputLocgic.getInput(true);
             if(InputLocgic.integerPrasingGard(input)) {
-                int menuSelected = Integer.parseInt(input);
+                menuSelected = Integer.parseInt(input);
                 if(!(menuSelected > gameNumber || menuSelected < 0)) check = true;
             }  
         }
-        return games.get(Integer.parseInt(input)-1);
+        return (menuSelected != 0) ? games.get(Integer.parseInt(input)-1) : new Game();
     }
 
     public static Game gameDetailPage(Game game) {
@@ -180,4 +181,29 @@ public class Ui {
             System.out.println();
         }
     }
+
+    // public static Game publisherMainPage(ArrayList<Game> game) {
+    //     String input = "";
+    //     boolean check = false;
+    //     int menuSelected = -1;
+
+    //     while(!check) {
+    //         InputLocgic.clearScreen();
+    //         System.out.println("Welcome to our store");
+    //         System.out.println("Please select an action\n");
+    //         System.out.println("1.) Create a game to publish");
+    //         if(!game.isEmpty()) {
+    //             for(int i = 0; i < game.size(); i++) {
+    //                 System.out.println((i+2) + ".) " + game.get(i).getName());
+    //             }
+    //         }
+    //         System.out.print("Your action: ");
+    //         input = InputLocgic.getInput(true);
+    //         if(InputLocgic.integerPrasingGard(input)) {
+    //             menuSelected = Integer.parseInt(input);
+    //             if(!(menuSelected > game.size() + 1 || menuSelected < 1)) check = true;
+    //         } 
+    //     } 
+    //     return ()
+    // }
 }

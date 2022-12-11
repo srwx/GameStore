@@ -28,6 +28,7 @@ public class Main {
 
     static void authentication(Market market) {
         int menuSelected = -1;
+        UserFactory user = market.getLoggedInUser();
 
         menuSelected = Ui.cover();
         if(menuSelected == 1) {
@@ -44,7 +45,7 @@ public class Main {
             String username = Ui.loginPage();
             // In this demo will query user form logged in user of market if system has this user,
             // otherwise will create an new instance
-            if(market.getLoggedInUser() == null) {
+            if(user == null || !user.getUsername().equalsIgnoreCase(username)) {
                 if(username.equals("publisher")) market.login(username, true);
                 else market.login(username, false);
             }
@@ -101,6 +102,7 @@ public class Main {
             GameFactory game;
             GameFactory selectedGame;
             selectedGame = Ui.home(market.getGames()); // return the selected game
+            if(selectedGame.getId() == null) System.exit(0); 
             game = Ui.gameDetailPage((Game)selectedGame); // return object game to add to cart
             if(game.getId() != null && !cart.contains(game)) {
                 executor.executeCommand(new AddToCart(game, user));
@@ -180,9 +182,11 @@ public class Main {
         Ui.ownedGamePage(user);
     }
 
+    // Demo for publisher: show list of game -> create game-> add dlc to game -> delete game 
     static void publisherDemo(Market market) {
         Publisher user = (Publisher)market.getLoggedInUser();
-        System.out.println("Welcome publisher");
+        
+        // Ui.publisherMainPage(user.getOwnedGames());
     }
 
     public static void main(String[] args) {

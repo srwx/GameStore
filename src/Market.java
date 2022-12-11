@@ -13,7 +13,6 @@ public class Market {
 
     public Market(ArrayList<Publisher> publishers) {
         this.publishers = publishers;
-        executor = new CommandExecutor();
     }
 
     public ArrayList<Game> getGames() {
@@ -26,11 +25,13 @@ public class Market {
     }
 
     public UserFactory createUser(String username, boolean isPublisher) {
+        executor = new CommandExecutor();
         if(isPublisher) return new Publisher(username);
         else return new User(username);
     }
 
     public void login(String username, boolean isPublisher) {
+        executor = new CommandExecutor();
         if(isPublisher) this.user = new Publisher(username);
         else this.user = new User(username);
     }
