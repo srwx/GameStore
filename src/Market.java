@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 import command.CommandExecutor;
+import example.dummy_data.GameStoreDatabase;
 import game.Game;
 import user.Publisher;
 import user.User;
@@ -17,8 +18,8 @@ public class Market {
 
     public ArrayList<Game> getGames() {
         ArrayList<Game> games = new ArrayList<Game>();
-        for(int i = 0; i < publishers.size(); i ++) {
-            ArrayList<Game> pubisher_games = publishers.get(i).getOwnedGames();
+        for (Publisher publisher : GameStoreDatabase.getPublisherList()) {
+            ArrayList<Game> pubisher_games = publisher.getOwnedGames();
             games.addAll(pubisher_games);
         }
         return games;
@@ -38,14 +39,24 @@ public class Market {
 
     public UserFactory createUser(String username, boolean isPublisher) {
         executor = new CommandExecutor();
-        if(isPublisher) return new Publisher(username);   
-        else return new User(username);
+        if(isPublisher) {
+            Publisher newPublisher = new Publisher(username);
+            GameStoreDatabase.addPublisher(newPublisher);
+            return newPublisher; 
+        }   
+        else {
+            User newUser = new User(username);
+            GameStoreDatabase.addUser(newUser);
+            return newUser; 
+        }
     }
 
     public void login(String username, boolean isPublisher) {
         executor = new CommandExecutor();
-        if(isPublisher) this.user = new Publisher(username);
-        else this.user = new User(username);
+        // if(isPublisher) this.user = new Publisher(username);
+        // else this.user = new User(username);
+        if(isPublisher) this.user = GameStoreDatabase.searchPublisher(username);
+        else this.user = GameStoreDatabase.searchUser(username);
     }
 
     public void logout() {
