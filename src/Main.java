@@ -44,6 +44,7 @@ public class Main {
             UserFactory dummyUser = new UserFactory();
             dummyUser = market.createUser(username, role == "user" ? false : true);
             market.login(dummyUser.getUsername(), dummyUser instanceof Publisher);
+            if(dummyUser instanceof Publisher) market.addPublisher((Publisher)market.getLoggedInUser());
         } 
         else if(menuSelected == 2) {
             // Login
@@ -228,12 +229,9 @@ public class Main {
     static void publisherDemo(Market market) {
         Publisher user = (Publisher)market.getLoggedInUser();
         CommandExecutor executor = market.getExecutor();
-        // testing 
-        user.addGame(TempGame.temp1);
-
         while(true) {
             int menuSelected = PublisherUi.publisherMainPage(user.getOwnedGames(), user.getUsername());
-            if(menuSelected == user.getOwnedGames().size() + 2) break; // Exit to authentication page
+            if(menuSelected == 0) break; // Exit to authentication page
             if(menuSelected != 1) {
                 // UI edit/delete/add dlc... for a game
                 gameOptionDemo(user, user.getOwnedGames().get(menuSelected-2), executor);
@@ -242,11 +240,15 @@ public class Main {
                 createGameDemo(user, executor);
             }
         }
+        InputLogic.clearScreen();
+        market.logout();
     }
 
     public static void main(String[] args) {
         Market market = new Market(init());
         while(true) {
+            System.err.println("has pub: " + market.getPublishers());
+            InputLogic.getInput(false);
             authentication(market);
             if(market.getLoggedInUser() instanceof User) {
                 userDemo(market);

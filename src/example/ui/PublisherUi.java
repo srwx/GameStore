@@ -26,12 +26,13 @@ public class PublisherUi {
                 for(i = 0; i < game.size(); i++) {
                     System.out.println((i+2) + ".) " + game.get(i).getName());
                 }
-                System.out.println("\n" + (i+2) + ".) Exit");
-            } else System.out.println("2.) Exit");
+                // System.out.println("\n" + (i+2) + ".) Exit");
+            } 
+            System.out.println((!hasGame) ? "\n0.) Exit" : "0.) Exit");
             System.out.print("\nYour action: ");
             input = InputLogic.getInput(true);
             menuSelected = Integer.parseInt(input);
-            if(!(menuSelected > game.size() + 2 || menuSelected < 1)) check = true;
+            if(!(menuSelected > game.size() + 2 || menuSelected < 0)) check = true;
         } 
         return menuSelected;
     }

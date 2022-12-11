@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 import command.CommandExecutor;
+import example.ui.InputLogic;
 import game.Game;
 import user.Publisher;
 import user.User;
@@ -38,11 +39,7 @@ public class Market {
 
     public UserFactory createUser(String username, boolean isPublisher) {
         executor = new CommandExecutor();
-        if(isPublisher) {
-            Publisher publisher = new Publisher(username);
-            this.publishers.add(publisher);
-            return publisher;
-        } 
+        if(isPublisher) return new Publisher(username);   
         else return new User(username);
     }
 
@@ -52,11 +49,19 @@ public class Market {
         else this.user = new User(username);
     }
 
+    public void logout() {
+        this.user = null;
+    }
+
     public UserFactory getLoggedInUser() {
         return this.user;
     }
 
     public CommandExecutor getExecutor() {
         return this.executor;
+    }
+
+    public ArrayList<Publisher> getPublishers() {
+        return this.publishers;
     }
 }
