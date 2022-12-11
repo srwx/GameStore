@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 
 import command.CommandExecutor;
-import example.ui.InputLogic;
 import game.Game;
 import user.Publisher;
 import user.User;
