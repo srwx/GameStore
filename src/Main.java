@@ -84,11 +84,11 @@ public class Main {
             }
             input = "";
             while(!checkInput) {
-                System.out.print("Do you want to see any dlcs? (select by command dlc[number] or dlc0 if you don't): ");
+                System.out.print("Do you want to see any dlcs? (select by command dlc[number] or n if you don't): ");
                 input = InputLogic.getInput(false).toLowerCase();
-                if(dlcOption.contains(input)) checkInput = true;
+                if(input.equalsIgnoreCase("n") || dlcOption.contains(input)) checkInput = true;
             }
-            if(!input.equalsIgnoreCase("dlc0")) {
+            if(!input.equalsIgnoreCase("n")) {
                 String index = Character.toString(input.charAt(3));
                 int dlcIndex = Integer.parseInt(index)-1;
                 Dlc selectedDlc = Ui.dlcDetailPage(dlc.get(dlcIndex));
