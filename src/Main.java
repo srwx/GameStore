@@ -5,6 +5,7 @@ import command.AddToCart;
 import command.Buy;
 import command.CommandExecutor;
 import dummy_data.TempGame;
+import game.Dlc;
 import game.Game;
 import game.GameFactory;
 import payment.UserWallet;
@@ -48,47 +49,100 @@ public class Main {
         }
     } 
 
-    // Demo for user: show cart/ownedGame -> select game to cart/show cart -> buy -> show ownedGame
-    static void userDemo(Market market) {
-        CommandExecutor executor = new CommandExecutor();
+    static void selectGameDemo(Market market) {
         ArrayList<GameFactory> cart = ((User)market.getLoggedInUser()).getCart();
-        UserWallet wallet = new UserWallet(1000);
+        CommandExecutor executor = market.getExecutor();
         User user = (User)market.getLoggedInUser();
+        ArrayList<Dlc> dlc = new ArrayList<Dlc>();
         String input = "";
-
-        // Show cart/ownedGame
-        Ui.ownedGamePage(user);
-        Ui.cartPage(user);
-        InputLocgic.getInput(false);
+        boolean checkInput = false;
 
         // select game to cart
         while(!input.equalsIgnoreCase("n")) {
+            dlc = new ArrayList<Dlc>();
+            checkInput = false;
             GameFactory game;
-            game = Ui.home(market.getGames());
-            game = Ui.gameDetailPage((Game)game);
-            if(game.getId() != null && !cart.contains(game)) executor.executeCommand(new AddToCart(game, user));
-            boolean checkInput = false;
+            GameFactory selectedGame;
+            selectedGame = Ui.home(market.getGames()); // return the selected game
+            game = Ui.gameDetailPage((Game)selectedGame); // return object game to add to cart
+            if(game.getId() != null && !cart.contains(game)) {
+                executor.executeCommand(new AddToCart(game, user));
+            } else {
+                dlc = ((Game)selectedGame).getExtension();
+            }
+            // Ask user to see any dlc of the selected game
+            if(!dlc.isEmpty()) {
+                ArrayList<String> dlcOption = new ArrayList<String>(){
+                    {
+                        add("dlc0");
+                    }
+                };
+                int i = -1;
+                for(i = 0; i < dlc.size(); i++) {
+                    dlcOption.add("dlc" + (i+1));
+                }
+                input = "";
+                while(!checkInput) {
+                    System.out.print("Do you want to see any dlcs? (select by command dlc[number] or dlc0 if you don't): ");
+                    input = InputLocgic.getInput(false).toLowerCase();
+                    if(dlcOption.contains(input)) checkInput = true;
+                }
+                if(!input.equalsIgnoreCase("dlc0")) {
+                    String index = Character.toString(input.charAt(3));
+                    int dlcIndex = Integer.parseInt(index)-1;
+                    game = Ui.dlcDetailPage(dlc.get(dlcIndex));
+                    if(game.getId() != null && !cart.contains(game)) executor.executeCommand(new AddToCart(game, user));
+                }  
+            }
+            checkInput = false;
             while(!checkInput) {
                 System.out.print("Add more game?(y/n): ");
                 input = InputLocgic.getInput(false).toLowerCase();
                 if(input.equals("y") || input.equals("n")) checkInput = true;
             }
         }
+    }
+
+    static void buyDemo(Market market) {
+        CommandExecutor executor = market.getExecutor();
+        ArrayList<GameFactory> cart = ((User)market.getLoggedInUser()).getCart();
+        UserWallet wallet = new UserWallet(1000);
+        User user = (User)market.getLoggedInUser();
+        String input = "";
 
         // select game to buy in cart
         boolean check = false;
         int menuSelected = -1;
         while(!check) {
+            InputLocgic.clearScreen();
+            System.out.println("User's cart");
             Ui.cartPage(user);
-            System.out.print("Selecte game to buy: ");
-            input = InputLocgic.getInput(true);
+            System.out.print("Selecte game to buy or n to exit: ");
+            input = InputLocgic.getInput(false);
+            if(input.equals("n")) check = true;
             if(InputLocgic.integerPrasingGard(input)) {
                 menuSelected = Integer.parseInt(input);
                 if(!(menuSelected > cart.size() || menuSelected < 1)) check = true;
             }
         }
-        executor.executeCommand(new Buy(cart.get(menuSelected-1), user, wallet));
+        InputLocgic.clearScreen();
+        if(!input.equals("n")) executor.executeCommand(new Buy(cart.get(menuSelected-1), user, wallet));
+    }
 
+    // Demo for user: show cart/ownedGame -> select game to cart/show cart -> buy -> show ownedGame
+    static void userDemo(Market market) {
+        User user = (User)market.getLoggedInUser();
+
+        // Show cart/ownedGame
+        InputLocgic.clearScreen();
+        Ui.ownedGamePage(user);
+        Ui.cartPage(user);
+        System.out.println("\nPress enter to continue...");
+        InputLocgic.getInput(false);
+
+        selectGameDemo(market);
+        buyDemo(market);
+        
         // show ownedGame
         Ui.ownedGamePage(user);
     }
