@@ -1,6 +1,8 @@
 package user;
 
 import java.util.ArrayList;
+
+import game.Game;
 import game.GameFactory;
 
 public class User extends UserFactory {
@@ -13,7 +15,7 @@ public class User extends UserFactory {
         this.cart = new ArrayList<GameFactory>();
     }
     
-    public User(String username, ArrayList<GameFactory> ownedGames) {
+    public User(String username, ArrayList<Game> ownedGames) {
         super(username, ownedGames);
         this.cart = new ArrayList<GameFactory>();
     }

@@ -1,5 +1,7 @@
 import java.util.ArrayList;
-import game.GameFactory;
+
+import command.CommandExecutor;
+import game.Game;
 import user.Publisher;
 import user.User;
 import user.UserFactory;
@@ -7,16 +9,17 @@ import user.UserFactory;
 public class Market {
     private ArrayList<Publisher> publishers;
     private UserFactory user;
-    // history
+    private CommandExecutor executor;
 
     public Market(ArrayList<Publisher> publishers) {
         this.publishers = publishers;
+        executor = new CommandExecutor();
     }
 
-    public ArrayList<GameFactory> getGames() {
-        ArrayList<GameFactory> games = new ArrayList<GameFactory>();
+    public ArrayList<Game> getGames() {
+        ArrayList<Game> games = new ArrayList<Game>();
         for(int i = 0; i < publishers.size(); i ++) {
-            ArrayList<GameFactory> pubisher_games = publishers.get(i).getOwnedGames();
+            ArrayList<Game> pubisher_games = publishers.get(i).getOwnedGames();
             games.addAll(pubisher_games);
         }
         return games;
@@ -34,5 +37,9 @@ public class Market {
 
     public UserFactory getLoggedInUser() {
         return this.user;
+    }
+
+    public CommandExecutor getExecutor() {
+        return this.executor;
     }
 }

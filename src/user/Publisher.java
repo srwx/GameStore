@@ -17,7 +17,7 @@ public class Publisher extends UserFactory {
         super(username);
     }
     
-    public Publisher(String username, ArrayList<GameFactory> ownedGames) {
+    public Publisher(String username, ArrayList<Game> ownedGames) {
         super(username, ownedGames);
     }
 

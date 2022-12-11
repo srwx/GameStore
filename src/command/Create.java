@@ -1,8 +1,8 @@
 package command;
 
+import game.Game;
 import game.GameFactory;
 import user.Publisher;
-import user.User;
 import user.UserFactory;
 
 public class Create extends Command {
@@ -11,8 +11,8 @@ public class Create extends Command {
     }
 
     public void execute() {
-        if (user instanceof Publisher) {
-            user.addGame(game);
+        if (user instanceof Publisher && game instanceof Game) {
+            user.addGame((Game)game);
 
             // set execution detail & datetime after execution complete
             String executedDetail = "Create " + game.getName() + " to store.\n";
