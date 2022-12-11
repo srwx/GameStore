@@ -1,4 +1,4 @@
-package dummy_data;
+package example.dummy_data;
 
 import game.*;
 import user.*;

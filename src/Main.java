@@ -5,12 +5,12 @@ import java.util.HashMap;
 import command.AddToCart;
 import command.Buy;
 import command.CommandExecutor;
-import dummy_data.TempGame;
+import example.dummy_data.TempGame;
+import example.ui.InputLocgic;
 import game.Dlc;
 import game.Game;
 import game.GameFactory;
 import payment.UserWallet;
-import ui.InputLocgic;
 import ui.Ui;
 import user.Publisher;
 import user.User;
@@ -182,6 +182,7 @@ public class Main {
     }
 
     static void publisherDemo(Market market) {
+        Publisher user = (Publisher)market.getLoggedInUser();
         System.out.println("Welcome publisher");
     }
 

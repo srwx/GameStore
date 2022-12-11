@@ -1,4 +1,5 @@
-package ui;
+package example.ui;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
