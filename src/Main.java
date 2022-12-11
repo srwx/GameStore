@@ -133,9 +133,8 @@ public class Main {
             check = false;
             while(!check) {
                 InputLocgic.clearScreen();
-                System.out.println("User's cart");
                 Ui.cartPage(user);
-                System.out.print("Selecte game to buy or n to exit: ");
+                System.out.print("Select game to buy or n to exit: ");
                 input = InputLocgic.getInput(false);
                 if(input.equals("n")) {
                     check = true;
@@ -168,8 +167,8 @@ public class Main {
 
         // Show cart/ownedGame
         InputLocgic.clearScreen();
+        System.out.println("\n============ Welcome, " + user.getUsername() + " ============");
         Ui.ownedGamePage(user);
-        System.out.println();
         Ui.cartPage(user);
         System.out.println("\nPress enter to continue...");
         InputLocgic.getInput(false);

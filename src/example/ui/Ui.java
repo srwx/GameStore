@@ -153,27 +153,31 @@ public class Ui {
 
     public static void cartPage(User user) {
         ArrayList<GameFactory> game = user.getCart();
-        System.out.println("Show user's cart");
+        System.out.print("\uD83D\uDED2 " + user.getUsername() + "'s cart: ");
         if(game.size() == 0) {
-            System.out.println("No game in cart");
+            System.out.println("-");
         }
         else {
+            System.out.println();
             for (int i = 0; i < game.size(); i++) {
-                System.out.println((i+1) + ".) " + game.get(i).getName());
+                System.out.println("\t" + (i+1) + ".) " + game.get(i).getName());
             }
+            System.out.println();
         }
     }
 
     public static void ownedGamePage(User user) {
         ArrayList<Game> game = user.getOwnedGames();
-        System.out.println("Show user's game");
+        System.out.print("\u2705 " + user.getUsername() + "'s owned game: ");
         if(game.size() == 0) {
-            System.out.println("No game in storage");
+            System.out.println("-");
         }
         else {
+            System.out.println();
             for (int i = 0; i < game.size(); i++) {
-                System.out.println((i+1) + ".) " + game.get(i).getName());
+                System.out.println("\t" + (i+1) + ".) " + game.get(i).getName());
             }
+            System.out.println();
         }
     }
 }
