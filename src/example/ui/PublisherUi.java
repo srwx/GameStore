@@ -21,18 +21,18 @@ public class PublisherUi {
             System.out.println("\n============ Welcome, " + username + " ============");
             System.out.println("Please select an action\n");
             System.out.println("1.) Create a game to publish");
+            System.out.println("2.) View History");
             if(!hasGame) {
                 System.out.println("\nSelect game to edit");
                 for(i = 0; i < game.size(); i++) {
-                    System.out.println((i+2) + ".) " + game.get(i).getName());
+                    System.out.println((i+3) + ".) " + game.get(i).getName());
                 }
-                // System.out.println("\n" + (i+2) + ".) Exit");
             } 
             System.out.println((!hasGame) ? "\n0.) Exit" : "0.) Exit");
             System.out.print("\nYour action: ");
             input = InputLogic.getInput(true);
             menuSelected = Integer.parseInt(input);
-            if(!(menuSelected > game.size() + 2 || menuSelected < 0)) check = true;
+            if(!(menuSelected > game.size() + 3 || menuSelected < 0)) check = true;
         } 
         return menuSelected;
     }

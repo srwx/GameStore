@@ -3,6 +3,7 @@ package example.ui;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import command.CommandExecutor;
 import game.Dlc;
 import game.Game;
 import game.GameFactory;
@@ -178,5 +179,12 @@ public class Ui {
             }
             System.out.println();
         }
-    }    
+    }
+    
+    public static void printHistory(CommandExecutor executor) {
+        InputLogic.clearScreen();
+        executor.printHistoryCommand();
+        System.out.println("Press enter to continue...");
+        InputLogic.getInput(false);
+    }
 }

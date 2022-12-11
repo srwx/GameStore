@@ -232,12 +232,17 @@ public class Main {
         while(true) {
             int menuSelected = PublisherUi.publisherMainPage(user.getOwnedGames(), user.getUsername());
             if(menuSelected == 0) break; // Exit to authentication page
-            if(menuSelected != 1) {
+            if(menuSelected > 2) {
                 // UI edit/delete/add dlc... for a game
                 gameOptionDemo(user, user.getOwnedGames().get(menuSelected-2), executor);
-            } else {
-                // form create game
+            } 
+            if(menuSelected == 1) {
+                // Go to form create game
                 createGameDemo(user, executor);
+            }
+            if(menuSelected == 2) {
+                // View history
+                Ui.printHistory(executor);
             }
         }
         InputLogic.clearScreen();
@@ -247,20 +252,12 @@ public class Main {
     public static void main(String[] args) {
         Market market = new Market(init());
         while(true) {
-            System.err.println("has pub: " + market.getPublishers());
-            InputLogic.getInput(false);
             authentication(market);
             if(market.getLoggedInUser() instanceof User) {
                 userDemo(market);
             } else {
                 publisherDemo(market);
             }
-
-            // Show all transaction 
-            System.out.println();
-            market.getExecutor().printHistoryCommand();
-            System.out.println("Press enter to continue...");
-            InputLogic.getInput(false);
         }
     }
 }

@@ -12,6 +12,9 @@ public class CommandExecutor {
     }
 
     public void printHistoryCommand() {
+        if(this.history.isEmpty()) {
+            System.out.println("No history created...");
+        }
         for (int i = history.size()-1; i >= 0; i--) {
             Command command = history.get(i);
             System.out.println(command.getExecutedDateTime());
