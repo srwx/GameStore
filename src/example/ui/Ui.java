@@ -124,6 +124,7 @@ public class Ui {
             ArrayList<Dlc> dlc = game.getExtension();
             game.printDetail();
             if(!dlc.isEmpty()) {
+                System.out.println("\t\t\t\tDLC List");
                 for (i = 0; i < dlc.size(); i++) {
                     System.out.println("dlc" + (i+1));
                     dlc.get(i).printDetail();

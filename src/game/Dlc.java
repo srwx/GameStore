@@ -25,10 +25,11 @@ public class Dlc extends GameFactory {
 
     // TODO
     public void printDetail() {
-        System.out.println("detail for dlc");
-        System.out.println("DLC name: " + this.getName());
-        System.out.println("DLC description: " + this.getDescription());
-        System.out.println("DLC price: " + this.getPrice());
-        System.out.println("------------------------------------");
+        String format = "%-20s%s%n";
+        System.out.println("detail for dlc:");
+        System.out.printf(format, "- DLC name: ", this.getName(), "\n");
+        System.out.printf(format, "- DLC description: ", this.getDescription(), "\n");
+        System.out.printf(format, "- DLC price: ", this.getPrice(), "\n");
+        System.out.println("");
     }
 }

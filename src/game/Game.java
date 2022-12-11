@@ -36,11 +36,12 @@ public class Game extends GameFactory {
     // TODO
     @Override
     public void printDetail() {
-        System.out.println("Game name: " + this.getName());
-        System.out.println("Game description: " + this.getDescription());
-        System.out.println("Game price: " + this.getPrice());
-        System.out.println("DLCs: " + (extension.size() > 0 ? String.join(", ", getExtensionNames()) : "-"));
-        System.out.println("------------------------------------");
+        String format = "%-20s%s%n";
+        System.out.printf(format, "Game name: ", this.getName(), "\n");
+        System.out.printf(format, "Game description: ", this.getDescription(), "\n");
+        System.out.printf(format, "Game price: ", this.getPrice(), "\n");
+        System.out.printf(format, "DLCs: ", (extension.size() > 0 ? String.join(", ", getExtensionNames()) : "-"), "\n");
+        System.out.println("----------------------------------------------");
     }
 
     public void addExtension(Dlc dlc) {
