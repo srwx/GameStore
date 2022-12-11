@@ -130,7 +130,7 @@ public class Ui {
                     dlc.get(i).printDetail();
                 }
             }
-            System.out.print("Add game to cart(y/n): ");
+            System.out.print("Add " + game.getName() + " to cart(y/n): ");
             input = InputLocgic.getInput(false).toLowerCase();
             if(input.equals("y") || input.equals("n")) check = true;
         }
@@ -144,7 +144,7 @@ public class Ui {
         while(!check) {
             InputLocgic.clearScreen();
             dlc.printDetail();
-            System.out.print("Add dlc to cart(y/n): ");
+            System.out.print("Add " + dlc.getName() + " to cart(y/n): ");
             input = InputLocgic.getInput(false).toLowerCase();
             if(input.equals("y") || input.equals("n")) check = true;
         }

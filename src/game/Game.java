@@ -37,9 +37,9 @@ public class Game extends GameFactory {
     @Override
     public void printDetail() {
         String format = "%-20s%s%n";
-        System.out.printf(format, "Game name: ", this.getName(), "\n");
-        System.out.printf(format, "Game description: ", this.getDescription(), "\n");
-        System.out.printf(format, "Game price: ", this.getPrice(), "\n");
+        System.out.printf(format, "Game name: ", this.getName());
+        System.out.printf(format, "Game description: ", this.getDescription());
+        System.out.printf(format, "Game price: ", (this.getPrice() + "฿"));
         System.out.printf(format, "DLCs: ", (extension.size() > 0 ? String.join(", ", getExtensionNames()) : "-"), "\n");
         System.out.println("----------------------------------------------");
     }
