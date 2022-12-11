@@ -6,8 +6,9 @@ public class CommandExecutor {
     private ArrayList<Command> history = new ArrayList<Command>();
 
     public void executeCommand(Command command) {
-        history.add(command);
         command.execute();
+        if (command.executedDateTime != null)
+            history.add(command);
     }
 
     public void printHistoryCommand() {
