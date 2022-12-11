@@ -29,19 +29,19 @@ public class Buy extends Command {
                     // check if user already has this dlc in his library
                     if (hasDlc) {
                         success = true;
-                        System.out.println("Failed to buy " + game.getName() + ", you already have this DLC");
+                        System.out.println("Failed to buy " + game.getName() + ", you already have this DLC.\n");
                     } else {
                         gameValidated = true;
                     } 
                 } else {
-                    System.out.println("Failed to buy " + game.getName() + ", you don't have the main game of this DLC");
+                    System.out.println("Failed to buy " + game.getName() + ", you don't have the main game of this DLC.\n");
                 }
             } else if(game instanceof Game) {
                 boolean hasGame = user.hasGame(game.getId());
                 // check if user already has this game in his library
                 if(hasGame) {
                     success = true;
-                    System.out.println("Failed to buy " + game.getName() + ", already have this game in your account");
+                    System.out.println("Failed to buy " + game.getName() + ", already have this game in your account.\n");
                 } else {
                     gameValidated = true;
                 }
@@ -66,14 +66,14 @@ public class Buy extends Command {
                         Game mainGame = user.getGame(dlcToAdd.getGameId());
                         user.addDlc(mainGame, dlcToAdd);
                     }                    
-                    System.out.println(game.getName() + " added to your library");
+                    System.out.println("\n" + game.getName() + " added to your library\n");
 
                     // set execution detail & datetime after execution complete
                     String executedDetail = "Successfully Buy " + game.getName() + "\n";
                     setExecutedDateTime(executedDetail);
                     success = true;
                 } else {
-                    System.out.println("Failed to buy " + game.getName() + ", please add your balance");
+                    System.out.println("Failed to buy " + game.getName() + ", please add your balance\n");
                 }
             }
             if(success) {
@@ -81,7 +81,7 @@ public class Buy extends Command {
                 executor.executeCommand(new RemoveFromCart(game, user));
             }      
         } else {
-            System.out.println("You have no permission to perform this action.");
+            System.out.println("You have no permission to perform this action.\n");
         }
     }
 }
