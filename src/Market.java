@@ -24,9 +24,25 @@ public class Market {
         return games;
     }
 
+    public void addPublisher(Publisher publisher) {
+        this.publishers.add(publisher);
+    }
+
+    public void removePublisher(Publisher publisher) {
+        if(this.publishers.contains(publisher)) this.publishers.remove(publisher);
+    }
+
+    public void removePublisher(int index) {
+        if(index < this.publishers.size()) this.publishers.remove(index);
+    }
+
     public UserFactory createUser(String username, boolean isPublisher) {
         executor = new CommandExecutor();
-        if(isPublisher) return new Publisher(username);
+        if(isPublisher) {
+            Publisher publisher = new Publisher(username);
+            this.publishers.add(publisher);
+            return publisher;
+        } 
         else return new User(username);
     }
 
@@ -42,17 +58,5 @@ public class Market {
 
     public CommandExecutor getExecutor() {
         return this.executor;
-    }
-
-    public void addPublisher(Publisher publisher) {
-        this.publishers.add(publisher);
-    }
-
-    public void removePublisher(Publisher publisher) {
-        if(this.publishers.contains(publisher)) this.publishers.remove(publisher);
-    }
-
-    public void removePublisher(int index) {
-        if(index < this.publishers.size()) this.publishers.remove(index);
     }
 }

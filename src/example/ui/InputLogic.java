@@ -2,7 +2,7 @@ package example.ui;
 
 import java.util.Scanner;
 
-public class InputLocgic {
+public class InputLogic {
     private static Scanner scanner = new Scanner(System.in);
 
     public static String getInput(boolean isMenuSelection) {

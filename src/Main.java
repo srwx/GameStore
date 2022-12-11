@@ -2,16 +2,21 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import command.AddDlc;
 import command.AddToCart;
 import command.Buy;
 import command.CommandExecutor;
+import command.Create;
+import command.Delete;
+import command.Update;
 import example.dummy_data.TempGame;
-import example.ui.InputLocgic;
+import example.ui.InputLogic;
 import game.Dlc;
 import game.Game;
 import game.GameFactory;
 import payment.UserWallet;
 import example.ui.Ui;
+import example.ui.PublisherUi;
 import user.Publisher;
 import user.User;
 import user.UserFactory;
@@ -46,15 +51,20 @@ public class Main {
             // In this demo will query user form logged in user of market if system has this user,
             // otherwise will create an new instance
             if(user == null || !user.getUsername().equalsIgnoreCase(username)) {
-                if(username.equals("publisher")) market.login(username, true);
+                if(username.equals("publisher")) {
+                    market.login(username, true);
+                    market.addPublisher((Publisher)market.getLoggedInUser());
+                } 
                 else market.login(username, false);
             }
         } else if(menuSelected == 3) {
             // Exit program
+            InputLogic.closeScanner();
             System.exit(0);
         }
     } 
 
+    /////////////////////////////////////////////// User/////////////////////////////////////////////
     static void selectDlcDemo(Market market, ArrayList<Dlc> dlc) {
         String input = "";
         boolean checkInput = false;
@@ -75,7 +85,7 @@ public class Main {
             input = "";
             while(!checkInput) {
                 System.out.print("Do you want to see any dlcs? (select by command dlc[number] or dlc0 if you don't): ");
-                input = InputLocgic.getInput(false).toLowerCase();
+                input = InputLogic.getInput(false).toLowerCase();
                 if(dlcOption.contains(input)) checkInput = true;
             }
             if(!input.equalsIgnoreCase("dlc0")) {
@@ -102,7 +112,7 @@ public class Main {
             GameFactory game;
             GameFactory selectedGame;
             selectedGame = Ui.home(market.getGames()); // return the selected game
-            if(selectedGame.getId() == null) System.exit(0); 
+            if(selectedGame.getId() == null) System.exit(0); // Exit the program
             game = Ui.gameDetailPage((Game)selectedGame); // return object game to add to cart
             if(game.getId() != null && !cart.contains(game)) {
                 executor.executeCommand(new AddToCart(game, user));
@@ -114,8 +124,8 @@ public class Main {
             checkInput = false;
             while(!checkInput) {
                 System.out.print("Add more game?(y/n): ");
-                input = InputLocgic.getInput(false).toLowerCase();
-                if(input.equals("y") || input.equals("n")) checkInput = true;
+                input = InputLogic.getInput(false).toLowerCase();
+                if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n")) checkInput = true;
             }
         }
     }
@@ -134,30 +144,30 @@ public class Main {
             int menuSelected = -1;
             check = false;
             while(!check) {
-                InputLocgic.clearScreen();
+                InputLogic.clearScreen();
                 Ui.cartPage(user);
-                System.out.print("Select game to buy or n to exit: ");
-                input = InputLocgic.getInput(false);
-                if(input.equals("n")) {
+                System.out.print("Select game to buy (or n to exit): ");
+                input = InputLogic.getInput(false);
+                if(input.equalsIgnoreCase("n")) {
                     check = true;
                     isBuying = false;
                 } 
-                if(InputLocgic.integerPrasingGard(input)) {
+                if(InputLogic.integerPrasingGard(input)) {
                     menuSelected = Integer.parseInt(input);
                     if(!(menuSelected > cart.size() || menuSelected < 1)) check = true;
                 }
             }
-            InputLocgic.clearScreen();
-            if(!input.equals("n")) {
+            InputLogic.clearScreen();
+            if(!input.equalsIgnoreCase("n")) {
                 executor.executeCommand(new Buy(cart.get(menuSelected-1), user, wallet));
                 check = false;
                 if(!cart.isEmpty()) {
                     while(!check) {
                         System.out.print("\nBuy more in your cart?(y/n): ");
-                        input = InputLocgic.getInput(false).toLowerCase();
-                        if(input.equals("y") || input.equals("n")) check = true;
+                        input = InputLogic.getInput(false).toLowerCase();
+                        if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n")) check = true;
                     }
-                    if(input.equals("n")) isBuying = false;
+                    if(input.equalsIgnoreCase("n")) isBuying = false;
                 } else isBuying = false;
             } 
         }
@@ -168,12 +178,12 @@ public class Main {
         User user = (User)market.getLoggedInUser();
 
         // Show cart/ownedGame
-        InputLocgic.clearScreen();
+        InputLogic.clearScreen();
         System.out.println("\n============ Welcome, " + user.getUsername() + " ============");
         Ui.ownedGamePage(user);
         Ui.cartPage(user);
         System.out.println("\nPress enter to continue...");
-        InputLocgic.getInput(false);
+        InputLogic.getInput(false);
 
         selectGameDemo(market);
         buyDemo(market);
@@ -182,11 +192,56 @@ public class Main {
         Ui.ownedGamePage(user);
     }
 
+    //////////////////////////////// Publisher /////////////////////////////////////////////////
+    static void createGameDemo(Publisher user, CommandExecutor executor) {
+        Game newGame = (Game)PublisherUi.createPage(false, "");
+        executor.executeCommand(new Create(newGame, user));
+    }
+
+    static void gameOptionDemo(Publisher user, Game game, CommandExecutor executor) {
+        int selected = PublisherUi.gameOptionMenu(game);
+        if(selected == 1) {
+            HashMap<String, String> detail = PublisherUi.updatePage(game);
+            executor.executeCommand(new Update(game, user, detail));
+        } else if(selected == 2) {
+            Dlc dlc = PublisherUi.dlcListPage(game.getExtension());
+            if(dlc.getId() != null) {
+                HashMap<String, String> detail = PublisherUi.updatePage(dlc);
+                executor.executeCommand(new Update(dlc, user, detail));
+            }
+        } else if(selected == 3) {
+            Dlc newDlc = (Dlc)PublisherUi.createPage(true, game.getId());
+            executor.executeCommand(new AddDlc(game, user, newDlc));
+        } else if(selected == 4) {
+            boolean check = false;
+            String input = "";
+            while(!check) {
+                System.out.print("Confirm delete (y/n): ");
+                input = InputLogic.getInput(false);
+                if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n")) check = true;
+            }
+            if(input.equalsIgnoreCase("y")) executor.executeCommand(new Delete(game, user));
+        }
+    }
+
     // Demo for publisher: show list of game -> create game-> add dlc to game -> delete game 
     static void publisherDemo(Market market) {
         Publisher user = (Publisher)market.getLoggedInUser();
-        
-        // Ui.publisherMainPage(user.getOwnedGames());
+        CommandExecutor executor = market.getExecutor();
+        // testing 
+        user.addGame(TempGame.temp1);
+
+        while(true) {
+            int menuSelected = PublisherUi.publisherMainPage(user.getOwnedGames(), user.getUsername());
+            if(menuSelected == user.getOwnedGames().size() + 2) break; // Exit to authentication page
+            if(menuSelected != 1) {
+                // UI edit/delete/add dlc... for a game
+                gameOptionDemo(user, user.getOwnedGames().get(menuSelected-2), executor);
+            } else {
+                // form create game
+                createGameDemo(user, executor);
+            }
+        }
     }
 
     public static void main(String[] args) {
@@ -203,7 +258,7 @@ public class Main {
             System.out.println();
             market.getExecutor().printHistoryCommand();
             System.out.println("Press enter to continue...");
-            InputLocgic.getInput(false);
+            InputLogic.getInput(false);
         }
     }
 }

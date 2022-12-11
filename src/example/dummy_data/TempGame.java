@@ -15,6 +15,7 @@ public class TempGame {
 
     public static Publisher publisher1 = new Publisher("Publisher1");
     public static Publisher publisher2 = new Publisher("Publisher2");
+    public static Publisher publisherDemo = new Publisher("publisher");
 
 
     public static void init() {

@@ -22,14 +22,14 @@ public class Ui {
         boolean check = false;
 
         while(!check) {
-            InputLocgic.clearScreen();
+            InputLogic.clearScreen();
             System.out.println("Welcome to Game Store\n");
             System.out.println("Please select an action:");
             System.out.println("1.) Create an account");
             System.out.println("2.) Log in to your account");
             System.out.println("3.) Exit");
             System.out.print("Your action: ");
-            input = InputLocgic.getInput(true);
+            input = InputLogic.getInput(true);
             if(menu.contains(input)) check = true;
         }
         return Integer.parseInt(input);
@@ -46,22 +46,22 @@ public class Ui {
         boolean check = false;
 
         while(!check) {
-            InputLocgic.clearScreen();
+            InputLogic.clearScreen();
             System.out.println("Select your role by number");
             System.out.println("1.) User");
             System.out.println("2.) Publisher");
             System.out.print("Your are: ");
-            input = InputLocgic.getInput(true);
+            input = InputLogic.getInput(true);
             if(menu.contains(input)) check = true;
         }
         // true is user, false is publisher
-        return input.equals(menu.get(0)) ? true : false;
+        return input.equalsIgnoreCase(menu.get(0)) ? true : false;
     }
 
     public static String loginPage() {
         String input = "";
 
-        InputLocgic.clearScreen();
+        InputLogic.clearScreen();
         System.out.println("Log in to ypur account\n");
 
         ////////////////////////////////////// Demo ////////////////////////////////////////
@@ -71,7 +71,7 @@ public class Ui {
         ////////////////////////////////////////////////////////////////////////////////////
 
         System.out.print("Enter your username: ");
-        input = InputLocgic.getInput(false);
+        input = InputLogic.getInput(false);
         return input;
     }
 
@@ -79,10 +79,10 @@ public class Ui {
         String input = "";
         boolean isUser = true;
 
-        InputLocgic.clearScreen();
+        InputLogic.clearScreen();
         System.out.println("Create an account to Get a new Game!\n");
         System.out.print("Enter your username: ");
-        input = InputLocgic.getInput(false);
+        input = InputLogic.getInput(false);
         isUser = getUserRole();
 
         HashMap<String, String> user = new HashMap<String, String>();
@@ -98,7 +98,7 @@ public class Ui {
         int menuSelected = -1;
 
         while(!check) {
-            InputLocgic.clearScreen();
+            InputLogic.clearScreen();
             System.out.println("All games in our store");
             System.out.println("Select game to see detail by number\n");
             for(int i = 0; i < gameNumber; i++) {
@@ -106,11 +106,9 @@ public class Ui {
                 games.get(i).printDetail();
             }
             System.out.print("Select game (0 to exit program): ");
-            input = InputLocgic.getInput(true);
-            if(InputLocgic.integerPrasingGard(input)) {
-                menuSelected = Integer.parseInt(input);
-                if(!(menuSelected > gameNumber || menuSelected < 0)) check = true;
-            }  
+            input = InputLogic.getInput(true);
+            menuSelected = Integer.parseInt(input);
+            if(!(menuSelected > gameNumber || menuSelected < 0)) check = true;
         }
         return (menuSelected != 0) ? games.get(Integer.parseInt(input)-1) : new Game();
     }
@@ -121,7 +119,7 @@ public class Ui {
         boolean check = false;
 
         while(!check) {
-            InputLocgic.clearScreen();
+            InputLogic.clearScreen();
             ArrayList<Dlc> dlc = game.getExtension();
             game.printDetail();
             if(!dlc.isEmpty()) {
@@ -132,10 +130,10 @@ public class Ui {
                 }
             }
             System.out.print("Add " + game.getName() + " to cart(y/n): ");
-            input = InputLocgic.getInput(false).toLowerCase();
-            if(input.equals("y") || input.equals("n")) check = true;
+            input = InputLogic.getInput(false).toLowerCase();
+            if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n")) check = true;
         }
-        return input.equals("y") ? game : new Game();
+        return input.equalsIgnoreCase("y") ? game : new Game();
     }
 
     public static Dlc dlcDetailPage(Dlc dlc) {
@@ -143,13 +141,13 @@ public class Ui {
         boolean check = false;
 
         while(!check) {
-            InputLocgic.clearScreen();
+            InputLogic.clearScreen();
             dlc.printDetail();
             System.out.print("Add " + dlc.getName() + " to cart(y/n): ");
-            input = InputLocgic.getInput(false).toLowerCase();
-            if(input.equals("y") || input.equals("n")) check = true;
+            input = InputLogic.getInput(false).toLowerCase();
+            if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n")) check = true;
         }
-        return input.equals("y") ? dlc : new Dlc();
+        return input.equalsIgnoreCase("y") ? dlc : new Dlc();
     }
 
     public static void cartPage(User user) {
@@ -180,30 +178,5 @@ public class Ui {
             }
             System.out.println();
         }
-    }
-
-    // public static Game publisherMainPage(ArrayList<Game> game) {
-    //     String input = "";
-    //     boolean check = false;
-    //     int menuSelected = -1;
-
-    //     while(!check) {
-    //         InputLocgic.clearScreen();
-    //         System.out.println("Welcome to our store");
-    //         System.out.println("Please select an action\n");
-    //         System.out.println("1.) Create a game to publish");
-    //         if(!game.isEmpty()) {
-    //             for(int i = 0; i < game.size(); i++) {
-    //                 System.out.println((i+2) + ".) " + game.get(i).getName());
-    //             }
-    //         }
-    //         System.out.print("Your action: ");
-    //         input = InputLocgic.getInput(true);
-    //         if(InputLocgic.integerPrasingGard(input)) {
-    //             menuSelected = Integer.parseInt(input);
-    //             if(!(menuSelected > game.size() + 1 || menuSelected < 1)) check = true;
-    //         } 
-    //     } 
-    //     return ()
-    // }
+    }    
 }
