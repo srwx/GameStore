@@ -136,8 +136,6 @@ public class PublisherUi {
             name =  InputLogic.getInput(false);
             System.out.print(type + " description: ");
             description =  InputLogic.getInput(false);
-            System.out.print(type + " price: ");
-            input =  InputLogic.getInput(false);
             while(price == -1) {
                 System.out.print(type + " price: ");
                 input = InputLogic.getInput(false);
@@ -148,6 +146,7 @@ public class PublisherUi {
                 }
             }
 
+            boolean hasChange = (name == null) && (description == null) && (price == -1 || price == game.getPrice());
             while(!check) {
                 InputLogic.clearScreen();
                 if(!name.isEmpty()) {
@@ -158,16 +157,23 @@ public class PublisherUi {
                     System.out.println(type + " description: " + description);
                     detail.put("description", description);
                 } 
-                if(price != -1 || price == game.getPrice()) {
+                if(price != -1 && price != game.getPrice()) {
                     System.out.println(type + " price: " + price);
                     detail.put("price", String.valueOf(price));
-                } 
-                System.out.print("\nConfirm? (y/n): ");
-                input = InputLogic.getInput(false).toLowerCase();
-                if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n")) {
-                    isEditing = true;
+                }
+                if(!hasChange)  {
+                    System.out.println("You didn't change anything, press enter to continue...");
+                    InputLogic.getInput(false);
                     check = true;
-                } 
+                    isEditing = true;
+                } else {
+                    System.out.print("\nConfirm? (y/n): ");
+                    input = InputLogic.getInput(false).toLowerCase();
+                    if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n")) {
+                        isEditing = true;
+                        check = true;
+                    }
+                }
             }
         }
         if(input.equalsIgnoreCase("y")) {
