@@ -3,6 +3,7 @@ package example.dummy_data;
 import java.util.ArrayList;
 
 import game.*;
+import payment.UserWallet;
 import user.*;
 
 // This class used for generate dummy data of game
@@ -20,9 +21,11 @@ public class GameStoreDatabase {
     public static Publisher publisherDemo = new Publisher("publisher");
 
     public static User user1 = new User("bob");
+    public static UserWallet wallet1 = new UserWallet(1000);
 
     public static ArrayList<Publisher> publisherList = new ArrayList<Publisher>();
     public static ArrayList<User> userList = new ArrayList<User>();
+    public static ArrayList<UserWallet> wallerList = new ArrayList<UserWallet>();
 
     public static void init() {
         // Add DLCs to game
@@ -43,8 +46,9 @@ public class GameStoreDatabase {
         publisherList.add(publisher2);
         publisherList.add(publisherDemo);
 
-        // Add user to list
+        // Add user & wallet to list
         userList.add(user1);
+        wallerList.add(wallet1);
     }
 
     public static ArrayList<Publisher> getPublisherList() {
@@ -55,11 +59,22 @@ public class GameStoreDatabase {
         return userList;
     }
 
-    public static User searchUser(String username) {
-        for (User user : userList) {
-            if (user.getUsername().equals(username))
-                return user;
+    public static int getUserIndex(String username) {
+        for(int i = 0; i < userList.size(); i++) {
+            if (userList.get(i).getUsername().equals(username)) {
+                return i;
+            }   
         }
+        return -1;
+    }
+
+    public static User searchUserByIndex(int index) {
+        if(index < userList.size()) return userList.get(index);
+        return null;
+    }
+
+    public static UserWallet searchWalletByIndex(int index) {
+        if(index < wallerList.size()) return wallerList.get(index);
         return null;
     }
 
@@ -69,6 +84,10 @@ public class GameStoreDatabase {
                 return publisher;
         }
         return null;
+    }
+
+    public static void addWallet(UserWallet wallet) {
+        wallerList.add(wallet);
     }
 
     public static void addUser(User user) {

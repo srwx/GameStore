@@ -33,7 +33,6 @@ public class Game extends GameFactory {
         return names;
     }
 
-    // TODO
     @Override
     public void printDetail() {
         String format = "%-20s%s%n";

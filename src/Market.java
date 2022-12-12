@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import command.CommandExecutor;
 import example.dummy_data.GameStoreDatabase;
 import game.Game;
+import payment.UserWallet;
 import user.Publisher;
 import user.User;
 import user.UserFactory;
@@ -11,6 +12,7 @@ public class Market {
     private ArrayList<Publisher> publishers;
     private UserFactory user;
     private CommandExecutor executor;
+    private UserWallet wallet;
 
     public Market(ArrayList<Publisher> publishers) {
         this.publishers = publishers;
@@ -46,6 +48,8 @@ public class Market {
         }   
         else {
             User newUser = new User(username);
+            UserWallet wallet = new UserWallet();
+            GameStoreDatabase.addWallet(wallet);
             GameStoreDatabase.addUser(newUser);
             return newUser; 
         }
@@ -56,7 +60,13 @@ public class Market {
         // if(isPublisher) this.user = new Publisher(username);
         // else this.user = new User(username);
         if(isPublisher) this.user = GameStoreDatabase.searchPublisher(username);
-        else this.user = GameStoreDatabase.searchUser(username);
+        else {
+            int index = GameStoreDatabase.getUserIndex(username);
+            if(index != -1) {
+                this.user = GameStoreDatabase.searchUserByIndex(index);
+                this.wallet = GameStoreDatabase.searchWalletByIndex(index);
+            }
+        } 
     }
 
     public void logout() {
@@ -73,5 +83,9 @@ public class Market {
 
     public ArrayList<Publisher> getPublishers() {
         return this.publishers;
+    }
+
+    public UserWallet getUserWallet() {
+        return this.wallet;
     }
 }

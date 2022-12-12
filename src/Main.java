@@ -137,7 +137,7 @@ public class Main {
     static void buyDemo(Market market) {
         CommandExecutor executor = market.getExecutor();
         ArrayList<GameFactory> cart = ((User)market.getLoggedInUser()).getCart();
-        UserWallet wallet = new UserWallet(1000);
+        UserWallet wallet = market.getUserWallet();
         User user = (User)market.getLoggedInUser();
         String input = "";
         boolean isBuying = true;
@@ -176,23 +176,47 @@ public class Main {
         }
     }
 
+    static void addBalance(UserWallet wallet) {
+        double balance = -1;
+        boolean check = false;
+
+        while(!check) {
+            InputLogic.clearScreen();
+            wallet.printBalance();
+            System.out.print("Enter your balance (n to back to menu): ");
+            String input = InputLogic.getInput(false);
+            if(input.equalsIgnoreCase("n")) return;
+            if(InputLogic.doublePrasingGard(input)) {
+                check = true;
+                balance = Double.parseDouble(input);
+                wallet.addBalance(balance);
+                System.out.println("Press enter to continue...");
+                InputLogic.getInput(false);
+                InputLogic.clearScreen();
+            } 
+        }
+        
+    }
+
     // Demo for user: show cart/ownedGame -> select game to cart/show cart -> buy -> show ownedGame
     static void userDemo(Market market) {
         User user = (User)market.getLoggedInUser();
         String userSelect = "";
+        boolean isLogin = true;
         InputLogic.clearScreen();
         System.out.println("\n============ Welcome, " + user.getUsername() + " ============");
-        boolean isLogin = true;
 
         while (isLogin) {
             // Menu to show
+            market.getUserWallet().printBalance();
             System.out.println("\nWhat you need to do?");
             System.out.println("\t1.) View owned game & cart");
             System.out.println("\t2.) View game market");
             System.out.println("\t3.) Buy game(s) in cart");
             System.out.println("\t4.) View command history");
-            System.out.println("\t5.) Log out");
-            System.out.print("\n> Select (1-5): ");
+            System.out.println("\t5.) Add balance to your wallet");
+            System.out.println("\t6.) Log out");
+            System.out.print("\n> Select (1-6): ");
             userSelect = InputLogic.getInput(true);
             System.out.println();
             switch (userSelect) {
@@ -213,7 +237,9 @@ public class Main {
                     market.getExecutor().printHistoryCommand();
                     break;
                 case ("5"):
-                    // TODO: log out
+                    addBalance(market.getUserWallet());
+                    break;
+                case ("6"):
                     market.logout();
                     isLogin = false;
                     break;

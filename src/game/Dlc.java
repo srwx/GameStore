@@ -23,7 +23,6 @@ public class Dlc extends GameFactory {
         this.gameId = gameId;
     }
 
-    // TODO
     public void printDetail() {
         String format = "%-20s%s%n";
         System.out.println("detail for dlc:");
