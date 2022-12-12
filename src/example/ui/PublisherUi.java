@@ -49,13 +49,19 @@ public class PublisherUi {
         while(isCreating) {
             InputLogic.clearScreen();
             System.out.println("Add your " + type + "!\n");
-            System.out.print(type + " name: ");
-            name = InputLogic.getInput(false);
-            System.out.print(type + " description: ");
-            description = InputLogic.getInput(false);
+            while(name == "") {
+                System.out.print(type + " name: ");
+                name = InputLogic.getInput(false);
+            }
+            while(description == "") {
+                System.out.print(type + " description: ");
+                description = InputLogic.getInput(false);
+            }
             if(!isDlc) {
-                System.out.print(type + " category: ");
-                category = InputLogic.getInput(false);
+                while(category == "") {
+                    System.out.print(type + " category: ");
+                    category = InputLogic.getInput(false);
+                }
             }
             while(price == -1) {
                 System.out.print(type + " price: ");
@@ -73,11 +79,17 @@ public class PublisherUi {
                 System.out.println(type + " price: " + price);
                 System.out.print("\nConfirm? (y/n): ");
                 input = InputLogic.getInput(false).toLowerCase();
-                if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n")) check = true;
+                if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n")) {
+                    check = true;
+                    isCreating = false;
+                } 
             }
-            if(input.equalsIgnoreCase("y"))  isCreating = false;
         }
-        return (!isDlc) ? new Game(name, description, price, category) : new Dlc(name, description, price, gameId);
+        if(input.equalsIgnoreCase("y")) {
+            return (!isDlc) ? new Game(name, description, price, category) : new Dlc(name, description, price, gameId);
+        } else {
+            return (!isDlc) ? new Game() : new Dlc();
+        }
     }
 
     public static int gameOptionMenu(Game game) {
@@ -126,9 +138,15 @@ public class PublisherUi {
             description =  InputLogic.getInput(false);
             System.out.print(type + " price: ");
             input =  InputLogic.getInput(false);
-            if(!input.isEmpty()) {
-                if(InputLogic.doublePrasingGard(input)) price = Double.parseDouble(input);
-            } 
+            while(price == -1) {
+                System.out.print(type + " price: ");
+                input = InputLogic.getInput(false);
+                if(!input.isEmpty()) {
+                    if(InputLogic.doublePrasingGard(input)) price = Double.parseDouble(input);
+                } else {
+                    price = game.getPrice();
+                }
+            }
 
             while(!check) {
                 InputLogic.clearScreen();
@@ -140,17 +158,23 @@ public class PublisherUi {
                     System.out.println(type + " description: " + description);
                     detail.put("description", description);
                 } 
-                if(price != -1) {
+                if(price != -1 || price == game.getPrice()) {
                     System.out.println(type + " price: " + price);
                     detail.put("price", String.valueOf(price));
                 } 
                 System.out.print("\nConfirm? (y/n): ");
                 input = InputLogic.getInput(false).toLowerCase();
-                if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n")) check = true;
+                if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n")) {
+                    isEditing = true;
+                    check = true;
+                } 
             }
-            if(input.equalsIgnoreCase("y"))  isEditing = true;
         }
-        return detail;
+        if(input.equalsIgnoreCase("y")) {
+            return detail;
+        } else {
+            return null;
+        }
     }
 
     public static Dlc dlcListPage(ArrayList<Dlc> dlc) {
@@ -166,21 +190,21 @@ public class PublisherUi {
                 for(i = 0; i < dlc.size(); i++) {
                     System.out.println((i+1) + ".) " + dlc.get(i).getName());
                 }
-                System.out.println((i+1) + ".) Back");
+                System.out.println("0.) Back");
                 System.out.print("\nYour action: ");
                 input = InputLogic.getInput(true);
                 menuSelected = Integer.parseInt(input);
-                if(!(menuSelected > dlc.size() + 2 || menuSelected < 1)) check = true;
+                if(!(menuSelected > dlc.size() || menuSelected < 0)) check = true;
             } else {
                 InputLogic.clearScreen();
                 System.out.println("No DLCs in this game\n");
                 System.out.println("Press enter to continue");
                 InputLogic.getInput(false);
-                menuSelected = 2;
+                menuSelected = 0;
                 check = true;
             }
             
         } 
-        return (menuSelected == dlc.size() + 2) ? new Dlc() : dlc.get(menuSelected-1);
+        return (menuSelected == 0) ? new Dlc() : dlc.get(menuSelected-1);
     }
 }

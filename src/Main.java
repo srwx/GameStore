@@ -279,23 +279,23 @@ public class Main {
     //////////////////////////////// Publisher /////////////////////////////////////////////////
     static void createGameDemo(Publisher user, CommandExecutor executor) {
         Game newGame = (Game)PublisherUi.createPage(false, "");
-        executor.executeCommand(new Create(newGame, user));
+        if(newGame.getId() != null) executor.executeCommand(new Create(newGame, user));
     }
 
     static void gameOptionDemo(Publisher user, Game game, CommandExecutor executor) {
         int selected = PublisherUi.gameOptionMenu(game);
         if(selected == 1) {
             HashMap<String, String> detail = PublisherUi.updatePage(game);
-            executor.executeCommand(new Update(game, user, detail));
+            if(detail != null) executor.executeCommand(new Update(game, user, detail));
         } else if(selected == 2) {
             Dlc dlc = PublisherUi.dlcListPage(game.getExtension());
             if(dlc.getId() != null) {
                 HashMap<String, String> detail = PublisherUi.updatePage(dlc);
-                executor.executeCommand(new Update(dlc, user, detail));
+                if(detail != null) executor.executeCommand(new Update(dlc, user, detail));
             }
         } else if(selected == 3) {
             Dlc newDlc = (Dlc)PublisherUi.createPage(true, game.getId());
-            executor.executeCommand(new AddDlc(game, user, newDlc));
+            if(newDlc.getId() != null) executor.executeCommand(new AddDlc(game, user, newDlc));
         } else if(selected == 4) {
             boolean check = false;
             String input = "";
