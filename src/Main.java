@@ -14,6 +14,9 @@ import example.ui.InputLogic;
 import game.Dlc;
 import game.Game;
 import game.GameFactory;
+import payment.CreditCard;
+import payment.OnlineBanking;
+import payment.Payment;
 import payment.UserWallet;
 import example.ui.Ui;
 import example.ui.PublisherUi;
@@ -137,7 +140,7 @@ public class Main {
     static void buyDemo(Market market) {
         CommandExecutor executor = market.getExecutor();
         ArrayList<GameFactory> cart = ((User)market.getLoggedInUser()).getCart();
-        UserWallet wallet = market.getUserWallet();
+        Payment payment;
         User user = (User)market.getLoggedInUser();
         String input = "";
         boolean isBuying = true;
@@ -146,6 +149,7 @@ public class Main {
         while(isBuying){
             boolean check = false;
             int menuSelected = -1;
+            int paymentSelected = -1;
             while(!check) {
                 InputLogic.clearScreen();
                 Ui.cartPage(user);
@@ -162,16 +166,39 @@ public class Main {
             }
             InputLogic.clearScreen();
             if(!input.equalsIgnoreCase("n")) {
-                executor.executeCommand(new Buy(cart.get(menuSelected-1), user, wallet));
-                check = false;
-                if(!cart.isEmpty()) {
-                    while(!check) {
-                        System.out.print("\n> Buy more in your cart?(y/n): ");
-                        input = InputLogic.getInput(false).toLowerCase();
-                        if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n")) check = true;
-                    }
-                    if(input.equalsIgnoreCase("n")) isBuying = false;
-                } else isBuying = false;
+                // select payment method
+                paymentSelected = Ui.paymentSelectionPage();
+                switch (paymentSelected) {
+                    case 1:
+                        payment = new OnlineBanking();
+                        break;
+                    case 2:
+                        payment = new CreditCard();
+                        break;
+                    case 3:
+                        payment = market.getUserWallet();
+                        break;  
+                    default:
+                        payment = null;
+                        break;
+                }
+                if (payment == null) {
+                    break;
+                }
+                else {
+                    InputLogic.clearScreen();
+                    // validate payment
+                    executor.executeCommand(new Buy(cart.get(menuSelected-1), user, payment));
+                    check = false;
+                    if(!cart.isEmpty()) {
+                        while(!check) {
+                            System.out.print("\n> Buy more in your cart?(y/n): ");
+                            input = InputLogic.getInput(false).toLowerCase();
+                            if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n")) check = true;
+                        }
+                        if(input.equalsIgnoreCase("n")) isBuying = false;
+                    } else isBuying = false;
+                }
             }
         }
     }

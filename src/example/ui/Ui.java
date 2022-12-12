@@ -196,4 +196,30 @@ public class Ui {
         System.out.println("Press enter to continue...");
         InputLogic.getInput(false);
     }
+
+    public static int paymentSelectionPage() {
+        String input = "";
+        ArrayList<String> menu = new ArrayList<String>() {
+            {
+                add("0");
+                add("1");
+                add("2");
+                add("3");
+            }
+        };
+        boolean check = false;
+
+        while(!check) {
+            InputLogic.clearScreen();
+            System.out.println("Select payment method");
+            System.out.println("\t1.) Online banking");
+            System.out.println("\t2.) Credit card");
+            System.out.println("\t3.) Store wallet");
+            System.out.println("\nPress 0 to back to menu");
+            System.out.print("\n> Your action: ");
+            input = InputLogic.getInput(true);
+            if(menu.contains(input)) check = true;
+        }
+        return Integer.parseInt(input);
+    }
 }
