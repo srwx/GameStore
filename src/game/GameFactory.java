@@ -8,6 +8,15 @@ public abstract class GameFactory {
     private String description;
     private double price;
 
+    public GameFactory() {
+        this.id = null;
+    };
+
+    // Shallow copy purpose
+    public GameFactory(String id) {
+        this.id = id;
+    }
+
     public GameFactory(String name, String description, double price) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
