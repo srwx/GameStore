@@ -183,7 +183,9 @@ public class Ui {
                 System.out.println("\t" + (i+1) + ".) " + game.get(i).getName());
                 ArrayList<Dlc> dlcs = game.get(i).getExtension();
                 for (int j = 0; j < dlcs.size(); j++) {
-                    System.out.println("\t    " + (i+1) + "." + (j+1) + ") " + dlcs.get(j).getName());
+                    if (j == 0)
+                        System.out.println("\t    DLCs:");
+                    System.out.println("\t\t" + (i+1) + "." + (j+1) + ") " + dlcs.get(j).getName());
                 }
             }
             System.out.println();
