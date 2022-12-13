@@ -146,8 +146,9 @@ public class PublisherUi {
                 }
             }
 
-            boolean hasChange = (name == null) && (description == null) && (price == -1 || price == game.getPrice());
+            boolean noChange = (name == null) && (description == null) && (price == game.getPrice());
             while(!check) {
+                input = "";
                 InputLogic.clearScreen();
                 if(!name.isEmpty()) {
                     System.out.println(type + " name: " + name);
@@ -161,7 +162,7 @@ public class PublisherUi {
                     System.out.println(type + " price: " + price);
                     detail.put("price", String.valueOf(price));
                 }
-                if(!hasChange)  {
+                if(noChange)  {
                     System.out.println("You didn't change anything, press enter to continue...");
                     InputLogic.getInput(false);
                     check = true;
