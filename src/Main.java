@@ -74,7 +74,7 @@ public class Main {
     /////////////////////////////////////////////// User/////////////////////////////////////////////
     static void selectDlcDemo(Market market, ArrayList<Dlc> dlc) {
         String input = "";
-        boolean checkInput = false;
+        boolean isInputCorrected = false;
         ArrayList<GameFactory> cart = ((User)market.getLoggedInUser()).getCart();
         CommandExecutor executor = market.getExecutor();
         User user = (User)market.getLoggedInUser();
@@ -90,10 +90,10 @@ public class Main {
                 dlcOption.add("dlc" + (i+1));
             }
             input = "";
-            while(!checkInput) {
+            while(!isInputCorrected) {
                 System.out.print("> Do you want to add any dlc to cart? (select by command dlc[number] or n if you don't): ");
                 input = InputLogic.getInput(false).toLowerCase();
-                if(input.equalsIgnoreCase("n") || dlcOption.contains(input)) checkInput = true;
+                if(input.equalsIgnoreCase("n") || dlcOption.contains(input)) isInputCorrected = true;
             }
             if(!input.equalsIgnoreCase("n")) {
                 String index = Character.toString(input.charAt(3));
@@ -110,12 +110,12 @@ public class Main {
         User user = (User)market.getLoggedInUser();
         ArrayList<Dlc> dlc = new ArrayList<Dlc>();
         String input = "";
-        boolean checkInput = false;
+        boolean isInputCorrected = false;
 
         // select game to cart
         while(!input.equalsIgnoreCase("n")) {
             dlc = new ArrayList<Dlc>();
-            checkInput = false;
+            isInputCorrected = false;
             GameFactory game;
             GameFactory selectedGame;
             selectedGame = Ui.home(market.getGames()); // return the selected game
@@ -128,11 +128,11 @@ public class Main {
             // Ask user to add any dlc of the selected game to cart
             selectDlcDemo(market, dlc);
             
-            checkInput = false;
-            while(!checkInput) {
+            isInputCorrected = false;
+            while(!isInputCorrected) {
                 System.out.print("> Add more game?(y/n): ");
                 input = InputLogic.getInput(false).toLowerCase();
-                if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n")) checkInput = true;
+                if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n")) isInputCorrected = true;
             }
         }
     }
@@ -147,21 +147,21 @@ public class Main {
 
         // select game to buy in cart
         while(isBuying){
-            boolean check = false;
+            boolean isInputCorrected = false;
             int menuSelected = -1;
             int paymentSelected = -1;
-            while(!check) {
+            while(!isInputCorrected) {
                 InputLogic.clearScreen();
                 Ui.cartPage(user);
                 System.out.print("> Select game to buy (or n to back to menu): ");
                 input = InputLogic.getInput(false);
                 if(input.equalsIgnoreCase("n")) {
-                    check = true;
+                    isInputCorrected = true;
                     isBuying = false;
                 } 
                 if(InputLogic.integerPrasingGard(input)) {
                     menuSelected = Integer.parseInt(input);
-                    if(!(menuSelected > cart.size() || menuSelected < 1)) check = true;
+                    if(!(menuSelected > cart.size() || menuSelected < 1)) isInputCorrected = true;
                 }
             }
             InputLogic.clearScreen();
@@ -189,12 +189,12 @@ public class Main {
                     InputLogic.clearScreen();
                     // validate payment
                     executor.executeCommand(new Buy(cart.get(menuSelected-1), user, payment));
-                    check = false;
+                    isInputCorrected = false;
                     if(!cart.isEmpty()) {
-                        while(!check) {
+                        while(!isInputCorrected) {
                             System.out.print("\n> Buy more in your cart?(y/n): ");
                             input = InputLogic.getInput(false).toLowerCase();
-                            if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n")) check = true;
+                            if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n")) isInputCorrected = true;
                         }
                         if(input.equalsIgnoreCase("n")) isBuying = false;
                     } else isBuying = false;
@@ -205,16 +205,16 @@ public class Main {
 
     static void addBalance(UserWallet wallet) {
         double balance = -1;
-        boolean check = false;
+        boolean isInputCorrected = false;
 
-        while(!check) {
+        while(!isInputCorrected) {
             InputLogic.clearScreen();
             wallet.printBalance();
             System.out.print("Enter your balance (n to back to menu): ");
             String input = InputLogic.getInput(false);
             if(input.equalsIgnoreCase("n")) return;
             if(InputLogic.doublePrasingGard(input)) {
-                check = true;
+                isInputCorrected = true;
                 balance = Double.parseDouble(input);
                 wallet.addBalance(balance);
                 System.out.println("Press enter to continue...");
@@ -297,12 +297,12 @@ public class Main {
             Dlc newDlc = (Dlc)PublisherUi.createPage(true, game.getId());
             if(newDlc.getId() != null) executor.executeCommand(new AddDlc(game, user, newDlc));
         } else if(selected == 4) {
-            boolean check = false;
+            boolean isInputCorrected = false;
             String input = "";
-            while(!check) {
+            while(!isInputCorrected) {
                 System.out.print("Confirm delete (y/n): ");
                 input = InputLogic.getInput(false);
-                if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n")) check = true;
+                if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n")) isInputCorrected = true;
             }
             if(input.equalsIgnoreCase("y")) executor.executeCommand(new Delete(game, user));
         }

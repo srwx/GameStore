@@ -20,9 +20,9 @@ public class Ui {
                 add("3");
             }
         };
-        boolean check = false;
+        boolean isInputCorrected = false;
 
-        while(!check) {
+        while(!isInputCorrected) {
             InputLogic.clearScreen();
             System.out.println("Welcome to Game Store\n");
             System.out.println("Please select an action:");
@@ -31,7 +31,7 @@ public class Ui {
             System.out.println("\t3.) Exit");
             System.out.print("\n> Your action: ");
             input = InputLogic.getInput(true);
-            if(menu.contains(input)) check = true;
+            if(menu.contains(input)) isInputCorrected = true;
         }
         return Integer.parseInt(input);
     }
@@ -44,16 +44,16 @@ public class Ui {
                 add("2");
             }
         };
-        boolean check = false;
+        boolean isInputCorrected = false;
 
-        while(!check) {
+        while(!isInputCorrected) {
             InputLogic.clearScreen();
             System.out.println("Select your role by number");
             System.out.println("\t1.) User");
             System.out.println("\t2.) Publisher");
             System.out.print("\n> Your are: ");
             input = InputLogic.getInput(true);
-            if(menu.contains(input)) check = true;
+            if(menu.contains(input)) isInputCorrected = true;
         }
         // true is user, false is publisher
         return input.equalsIgnoreCase(menu.get(0)) ? true : false;
@@ -98,11 +98,11 @@ public class Ui {
 
     public static GameFactory home(ArrayList<Game> games) {
         String input = "";
-        boolean check = false;
+        boolean isInputCorrected = false;
         int gameNumber = games.size();
         int menuSelected = -1;
 
-        while(!check) {
+        while(!isInputCorrected) {
             InputLogic.clearScreen();
             System.out.println("All games in our store");
             System.out.println("Select game to see detail by number\n");
@@ -113,7 +113,7 @@ public class Ui {
             System.out.print("> Enter game's number to view game information (or enter 0 to back to menu): ");
             input = InputLogic.getInput(true);
             menuSelected = Integer.parseInt(input);
-            if(!(menuSelected > gameNumber || menuSelected < 0)) check = true;
+            if(!(menuSelected > gameNumber || menuSelected < 0)) isInputCorrected = true;
             System.out.println();
         }
         return (menuSelected != 0) ? games.get(Integer.parseInt(input)-1) : new Game();
@@ -122,9 +122,9 @@ public class Ui {
     public static Game gameDetailPage(Game game) {
         String input = "";
         int i = 0;
-        boolean check = false;
+        boolean isInputCorrected = false;
 
-        while(!check) {
+        while(!isInputCorrected) {
             InputLogic.clearScreen();
             ArrayList<Dlc> dlc = game.getExtension();
             game.printDetail();
@@ -137,21 +137,21 @@ public class Ui {
             }
             System.out.print("> Add " + game.getName() + " to cart(y/n): ");
             input = InputLogic.getInput(false).toLowerCase();
-            if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n")) check = true;
+            if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n")) isInputCorrected = true;
         }
         return input.equalsIgnoreCase("y") ? game : new Game();
     }
 
     public static Dlc dlcDetailPage(Dlc dlc) {
         String input = "";
-        boolean check = false;
+        boolean isInputCorrected = false;
 
-        while(!check) {
+        while(!isInputCorrected) {
             InputLogic.clearScreen();
             dlc.printDetail();
             System.out.print("> Add " + dlc.getName() + " to cart(y/n): ");
             input = InputLogic.getInput(false).toLowerCase();
-            if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n")) check = true;
+            if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n")) isInputCorrected = true;
         }
         return input.equalsIgnoreCase("y") ? dlc : new Dlc();
     }
@@ -209,9 +209,9 @@ public class Ui {
                 add("3");
             }
         };
-        boolean check = false;
+        boolean isInputCorrected = false;
 
-        while(!check) {
+        while(!isInputCorrected) {
             InputLogic.clearScreen();
             System.out.println("Select payment method");
             System.out.println("\t1.) Online banking");
@@ -220,7 +220,7 @@ public class Ui {
             System.out.println("\nPress 0 to back to menu");
             System.out.print("\n> Your action: ");
             input = InputLogic.getInput(true);
-            if(menu.contains(input)) check = true;
+            if(menu.contains(input)) isInputCorrected = true;
         }
         return Integer.parseInt(input);
     }

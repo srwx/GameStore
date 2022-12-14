@@ -11,12 +11,12 @@ public class PublisherUi {
     
     public static int publisherMainPage(ArrayList<Game> game, String username) {
         String input = "";
-        boolean check = false;
+        boolean isInputCorrected = false;
         int menuSelected = -1;
         int i = -1;
         boolean hasGame = game.isEmpty();
 
-        while(!check) {
+        while(!isInputCorrected) {
             InputLogic.clearScreen();
             System.out.println("\n============ Welcome, " + username + " ============");
             System.out.println("Please select an action\n");
@@ -32,7 +32,7 @@ public class PublisherUi {
             System.out.print("\nYour action: ");
             input = InputLogic.getInput(true);
             menuSelected = Integer.parseInt(input);
-            if(!(menuSelected > game.size() + 3 || menuSelected < 0)) check = true;
+            if(!(menuSelected > game.size() + 3 || menuSelected < 0)) isInputCorrected = true;
         } 
         return menuSelected;
     }
@@ -70,8 +70,8 @@ public class PublisherUi {
                     if(InputLogic.doublePrasingGard(input)) price = Double.parseDouble(input);
                 }
             }
-            boolean check = false;
-            while(!check) {
+            boolean isInputCorrected = false;
+            while(!isInputCorrected) {
                 InputLogic.clearScreen();
                 System.out.println(type + " name: " + name);
                 System.out.println(type + " description: " + description);
@@ -80,7 +80,7 @@ public class PublisherUi {
                 System.out.print("\nConfirm? (y/n): ");
                 input = InputLogic.getInput(false).toLowerCase();
                 if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n")) {
-                    check = true;
+                    isInputCorrected = true;
                     isCreating = false;
                 } 
             }
@@ -95,10 +95,10 @@ public class PublisherUi {
     public static int gameOptionMenu(Game game) {
         String input = "";
         int menuSelected = -1;
-        boolean check = false;
+        boolean isInputCorrected = false;
         
 
-        while(!check) {
+        while(!isInputCorrected) {
             InputLogic.clearScreen();
             System.out.println("Your game detail");
             game.printDetail();
@@ -112,14 +112,14 @@ public class PublisherUi {
             System.out.print("Your action: ");
             input = InputLogic.getInput(true);
             menuSelected = Integer.parseInt(input);
-            if(!(menuSelected > 5 || menuSelected < 1)) check = true;
+            if(!(menuSelected > 5 || menuSelected < 1)) isInputCorrected = true;
         }
         return menuSelected;
     }
 
     public static HashMap<String, String> updatePage(GameFactory game) {
         String input = "";
-        boolean check = false;
+        boolean isInputCorrected = false;
         String name = "";
         String description = "";
         double price = -1;
@@ -149,7 +149,7 @@ public class PublisherUi {
             boolean nameChange = (!name.isEmpty() && !name.equals(game.getName()));
             Boolean desChange = (!description.isEmpty() && !description.equals(game.getDescription()));
             boolean priceChange = (price != game.getPrice());
-            while(!check) {
+            while(!isInputCorrected) {
                 input = "";
                 InputLogic.clearScreen();
                 if(nameChange) {
@@ -167,14 +167,14 @@ public class PublisherUi {
                 if(!(nameChange || desChange || priceChange))  {
                     System.out.println("You didn't change anything, press enter to continue...");
                     InputLogic.getInput(false);
-                    check = true;
+                    isInputCorrected = true;
                     isEditing = true;
                 } else {
                     System.out.print("\nConfirm? (y/n): ");
                     input = InputLogic.getInput(false).toLowerCase();
                     if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n")) {
                         isEditing = true;
-                        check = true;
+                        isInputCorrected = true;
                     }
                 }
             }
@@ -188,11 +188,11 @@ public class PublisherUi {
 
     public static Dlc dlcListPage(ArrayList<Dlc> dlc) {
         String input = "";
-        boolean check = false;
+        boolean isInputCorrected = false;
         int menuSelected = -1;
         int i = -1;
 
-        while(!check) {
+        while(!isInputCorrected) {
             if(!dlc.isEmpty()) {
                 InputLogic.clearScreen();
                 System.out.println("Please select a DLC to edit\n");
@@ -203,14 +203,14 @@ public class PublisherUi {
                 System.out.print("\nYour action: ");
                 input = InputLogic.getInput(true);
                 menuSelected = Integer.parseInt(input);
-                if(!(menuSelected > dlc.size() || menuSelected < 0)) check = true;
+                if(!(menuSelected > dlc.size() || menuSelected < 0)) isInputCorrected = true;
             } else {
                 InputLogic.clearScreen();
                 System.out.println("No DLCs in this game\n");
                 System.out.println("Press enter to continue");
                 InputLogic.getInput(false);
                 menuSelected = 0;
-                check = true;
+                isInputCorrected = true;
             }
             
         } 
