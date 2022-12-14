@@ -14,8 +14,8 @@ public class Buy extends Command {
     }
 
     public void execute() {
-        boolean success = false;
-        boolean gameValidated = false;
+        boolean isSuccess = false;
+        boolean IsGameValidated = false;
 
         if (user instanceof User) {
             // Game Validation
@@ -28,10 +28,10 @@ public class Buy extends Command {
                     boolean hasDlc = user.hasDlc(thisDlc);
                     // check if user already has this dlc in his library
                     if (hasDlc) {
-                        success = true;
+                        isSuccess = true;
                         System.out.println("Failed to buy " + game.getName() + ", you already have this DLC.\n");
                     } else {
-                        gameValidated = true;
+                        IsGameValidated = true;
                     } 
                 } else {
                     System.out.println("Failed to buy " + game.getName() + ", you don't have the main game of this DLC.\n");
@@ -40,17 +40,17 @@ public class Buy extends Command {
                 boolean hasGame = user.hasGame(game.getId());
                 // check if user already has this game in his library
                 if(hasGame) {
-                    success = true;
+                    isSuccess = true;
                     System.out.println("Failed to buy " + game.getName() + ", already have this game in your account.\n");
                 } else {
-                    gameValidated = true;
+                    IsGameValidated = true;
                 }
             }
             
-            if (gameValidated) {
-                boolean paymentValidated = payment.validatePayment(game.getPrice());
+            if (IsGameValidated) {
+                boolean isPaymentValidated = payment.validatePayment(game.getPrice());
 
-                if (paymentValidated) {
+                if (isPaymentValidated) {
                     // add game/dlc to user's library
                     if (game instanceof Game) {
                         // Copy game object to user class
@@ -71,12 +71,12 @@ public class Buy extends Command {
                     // set execution detail & datetime after execution complete
                     String executedDetail = "Successfully Buy " + game.getName() + "\n";
                     setExecutedDateTime(executedDetail);
-                    success = true;
+                    isSuccess = true;
                 } else {
                     System.out.println("Failed to buy " + game.getName() + ", please add your balance\n");
                 }
             }
-            if(success) {
+            if(isSuccess) {
                 CommandExecutor executor = new CommandExecutor();
                 executor.executeCommand(new RemoveFromCart(game, user));
             }      

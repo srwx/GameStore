@@ -39,20 +39,20 @@ public class Publisher extends UserFactory {
 
     // detail key: name, price, description
     public boolean editGame(GameFactory game, HashMap<String, String> detail) {
-        boolean flag = false;
+        boolean hasGame = false;
         if(game instanceof Dlc) {
             for (GameFactory ownedGame : ownedGames) {
                 if (Objects.equals(ownedGame.getId(), ((Dlc) game).getGameId())) {
-                    flag = true;
+                    hasGame = true;
                     break;
                 }
             }
         }
         else if(ownedGames.contains(game)) {
-            flag = true;
+            hasGame = true;
         }
 
-        if(flag) {
+        if(hasGame) {
             if(detail.containsKey("name")) game.setName(detail.get("name"));
             if(detail.containsKey("price")) game.setPrice(Double.parseDouble(detail.get("price")));
             if(detail.containsKey("description")) game.setDescription(detail.get("description"));
